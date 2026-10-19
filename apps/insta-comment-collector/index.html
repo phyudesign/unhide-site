@@ -109,10 +109,14 @@
 
 <div class="lb" id="lb" role="dialog" aria-label="이미지 크게 보기"><img alt=""></div>
 <script>
-// 다운로드 주소: 설치 파일 배포 위치가 정해지면 여기만 바꾸면 됨
-const DOWNLOAD = { url: "", version: "4.2.0" };
+// 다운로드: 서버의 latest.json을 읽어 항상 최신 설치 파일로 연결 (윈도우판이 새로 빌드되면 자동 갱신)
+const LATEST = "https://udfluclrwnnxlwfpmmim.supabase.co/storage/v1/object/public/downloads/insta-comment-collector/latest.json";
 const a = document.getElementById('dl-win');
-if (DOWNLOAD.url) { a.href = DOWNLOAD.url; a.removeAttribute('aria-disabled'); document.getElementById('dl-ver').textContent = DOWNLOAD.version; }
+fetch(LATEST + '?t=' + Date.now()).then((r) => r.ok ? r.json() : null).then((j) => {
+  if (!j || !j.url) return;
+  a.href = j.url; a.removeAttribute('aria-disabled'); a.setAttribute('download', '');
+  document.getElementById('dl-ver').textContent = j.version + (j.size ? ` · ${(j.size / 1048576).toFixed(0)}MB` : '');
+}).catch(() => {});
 const lb = document.getElementById('lb');
 document.querySelectorAll('.steps a, .shots img').forEach((el) => el.addEventListener('click', (e) => {
   e.preventDefault(); lb.querySelector('img').src = el.href || el.src; lb.classList.add('on');
