@@ -8,83 +8,89 @@
 <link rel="icon" href="img/icon.png">
 <link rel="stylesheet" href="../../assets/site.css">
 <style>
-.ah{padding:90px 0 70px}
-.ah .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:60px;align-items:center}
-.ah .ic{width:120px;height:120px;filter:drop-shadow(0 18px 30px rgba(60,40,120,.3));margin-bottom:26px}
-.ah h1{font-size:clamp(42px,5.6vw,72px);font-weight:900;letter-spacing:-.04em}
-.ah .lead{font-size:20px;color:var(--muted);margin:18px 0 34px;max-width:520px}
-.dl{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-.dl small{display:block;width:100%;color:var(--muted);font-size:14px;margin-top:6px}
-.hero-shot{border-radius:24px;overflow:hidden;box-shadow:0 40px 80px rgba(60,30,40,.22);transform:rotate(1.5deg)}
-.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.feat div{background:#fff;border-radius:var(--r);padding:30px}
-.feat b{display:block;font-size:20px;margin:14px 0 6px;letter-spacing:-.02em}
-.feat p{margin:0;color:var(--muted);font-size:15px}
-.feat span{display:inline-flex;width:44px;height:44px;border-radius:14px;align-items:center;justify-content:center;font-size:22px;background:var(--cream-2)}
-.shots{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ah{padding:110px 0 64px}
+.ah .ic{width:76px;height:76px;margin-bottom:28px}
+.ah h1{font-size:clamp(30px,3.4vw,48px);font-weight:600;letter-spacing:-.035em;line-height:1.2;margin-bottom:18px}
+.ah .lead{color:var(--sub);font-size:17px;max-width:620px;margin-bottom:34px}
+.dl{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.dl small{display:block;width:100%;color:var(--sub);font-size:13px;margin-top:10px}
+.ah .tags{grid-column:11/13;text-align:right;font-size:13px;color:var(--sub);line-height:1.9}
+.blk{padding-top:120px}
+.blk h2{font-size:22px;font-weight:600;letter-spacing:-.02em;margin-bottom:28px}
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:40px 24px}
+.feat div{border-top:1px solid var(--ink);padding-top:16px}
+.feat b{display:block;font-weight:600;margin-bottom:6px}
+.feat p{color:var(--sub);font-size:14px}
+.shots{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .shots figure{margin:0}
-.shots img{border-radius:18px;border:1px solid var(--line)}
-.shots figcaption{font-size:14px;color:var(--muted);margin-top:10px}
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.steps a{display:block;text-decoration:none}
-.steps img{border-radius:16px;border:1px solid var(--line);transition:transform .2s}
-.steps a:hover img{transform:translateY(-3px)}
-.steps span{display:block;font-size:14px;font-weight:700;margin-top:10px}
-.faq details{background:#fff;border-radius:20px;padding:22px 26px;margin-bottom:10px}
-.faq summary{font-weight:700;font-size:17px;cursor:pointer;list-style:none}
-.faq summary::after{content:"+";float:right;color:var(--crimson);font-size:22px;line-height:1}
+.shots .ph{background:var(--panel);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;cursor:zoom-in}
+.shots .ph img{width:84%;border-radius:6px;box-shadow:0 14px 36px rgba(0,0,0,.14)}
+.shots figcaption,.steps span{font-size:13px;color:var(--sub);margin-top:12px;display:block}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:32px 24px}
+.steps img{border:1px solid var(--line);transition:opacity .2s;cursor:zoom-in}
+.steps a:hover img{opacity:.8}
+.faq details{border-top:1px solid var(--line);padding:22px 0}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{font-weight:500;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:20px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--sub)}
 .faq details[open] summary::after{content:"–"}
-.faq p{margin:12px 0 0;color:var(--muted)}
-.lb{position:fixed;inset:0;background:rgba(20,16,18,.86);display:none;align-items:center;justify-content:center;padding:30px;z-index:50}
-.lb.on{display:flex}.lb img{max-height:92vh;border-radius:14px}
-@media (max-width:900px){.ah .wrap{grid-template-columns:1fr}.feat,.shots{grid-template-columns:1fr}.steps{grid-template-columns:repeat(2,1fr)}}
+.faq p{color:var(--sub);margin-top:10px;font-size:14px;max-width:680px}
+.lb{position:fixed;inset:0;background:rgba(255,255,255,.96);display:none;align-items:center;justify-content:center;padding:40px;z-index:50;cursor:zoom-out}
+.lb.on{display:flex}.lb img{max-height:90vh;box-shadow:0 30px 80px rgba(0,0,0,.18)}
+@media (max-width:900px){.ah .tags{text-align:left;margin-top:16px}.feat,.shots{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.blk{padding-top:80px}}
 </style>
 </head>
 <body>
 <header class="hd"><div class="wrap">
-  <a class="logo" href="../../">UN<b>HIDE</b></a>
-  <nav class="nav"><a href="../../#apps">Apps</a><a href="#install">설치 방법</a><a href="#faq">FAQ</a></nav>
+  <a class="logo" href="../../">UNHIDE<i>.</i></a>
+  <nav class="nav"><a href="../../#work" class="on">Selected Projects</a><a href="../../#about">About</a><a href="../../#contact">Contact</a></nav>
 </div></header>
 
+<main>
 <section class="ah"><div class="wrap">
-  <div>
-    <img class="ic" src="img/icon.png" alt="">
-    <div class="eyebrow">Apps by Unhide</div>
-    <h1 style="margin-top:10px">인스타 댓글 수집기</h1>
-    <p class="lead">게시물 주소만 넣으면 댓글·태그·좋아요·팔로우까지 엑셀로 정리하고, 조건을 충족한 참여자 중에서 공정하게 추첨해요.</p>
-    <div class="dl">
-      <a class="btn btn-p" id="dl-win" href="#" aria-disabled="true">⬇ Windows용 다운로드</a>
-      <a class="btn btn-g" href="#install">설치 방법 보기</a>
-      <small id="dl-note">Windows 10·11 · 버전 <span id="dl-ver">4.2.0</span> · 설치 후 <b>등록 코드</b>가 필요해요</small>
+  <div class="row">
+    <div class="k lbl">Apps:</div>
+    <div class="v">
+      <img class="ic" src="img/icon.png" alt="">
+      <h1>인스타 댓글 수집기<br><span style="color:var(--sub)">Comment Collector</span></h1>
+      <p class="lead">게시물 주소만 넣으면 댓글·태그·좋아요·팔로우까지 엑셀로 정리하고, 조건을 충족한 참여자 중에서 공정하게 추첨해요.</p>
+      <div class="dl">
+        <a class="btn btn-p" id="dl-win" href="#" aria-disabled="true">Windows용 다운로드 ↓</a>
+        <a class="btn btn-g" href="#install">설치 방법</a>
+        <small id="dl-note">Windows 10·11 · 버전 <span id="dl-ver">4.2.0</span> · 설치 후 <b>등록 코드</b>가 필요해요</small>
+      </div>
     </div>
-  </div>
-  <div class="hero-shot"><img src="img/shot-basic.jpg" alt="인스타 댓글 수집기 실행 화면"></div>
-</div></section>
-
-<section class="sec" style="padding-top:40px"><div class="wrap">
-  <div class="sec-hd"><div><div class="eyebrow">Features</div><h2>이벤트 운영이 쉬워져요</h2></div></div>
-  <div class="feat">
-    <div><span>💬</span><b>댓글 한 번에 수집</b><p>작성자, 내용, 시간, 태그한 친구 수, 대댓글까지 엑셀 한 파일로.</p></div>
-    <div><span>✅</span><b>조건 자동 체크</b><p>지정한 문구 포함 여부, 좋아요·팔로우 여부를 자동으로 확인해요.</p></div>
-    <div><span>🎁</span><b>공정한 추첨</b><p>태그 수만큼 응모권 가중치, 당첨·예비 인원 설정, 추첨 번호로 결과 재현.</p></div>
-    <div><span>🔐</span><b>앱 안에서 로그인</b><p>평소 쓰는 인스타그램 계정으로 앱 안에서 바로 로그인해요.</p></div>
-    <div><span>🎨</span><b>4가지 스타일</b><p>기본 · 리퀴드 글래스 · 애니 · 팝. 취향대로 화면을 바꿀 수 있어요.</p></div>
-    <div><span>📂</span><b>기록 보관</b><p>지난 수집·추첨 결과를 언제든 다시 불러와 확인해요.</p></div>
+    <div class="tags">Windows<br>Event Tool<br>2026</div>
   </div>
 </div></section>
 
-<section class="sec" style="padding-top:20px"><div class="wrap">
-  <div class="sec-hd"><div><div class="eyebrow">Screens</div><h2>화면 미리보기</h2></div></div>
-  <div class="shots">
-    <figure><img src="img/shot-basic.jpg" alt=""><figcaption>댓글 수집 — 기본 스타일</figcaption></figure>
-    <figure><img src="img/shot-draw.jpg" alt=""><figcaption>이벤트 추첨</figcaption></figure>
-    <figure><img src="img/shot-pop.jpg" alt=""><figcaption>팝 스타일</figcaption></figure>
-  </div>
+<div class="wrap"><div class="cover"><img src="img/shot-basic.jpg" alt="인스타 댓글 수집기 실행 화면"></div></div>
+
+<section class="wrap blk"><div class="row rule">
+  <div class="k lbl">Features</div>
+  <div class="v" style="grid-column:4/13"><div class="feat">
+    <div><b>댓글 한 번에 수집</b><p>작성자, 내용, 시간, 태그한 친구 수, 대댓글까지 엑셀 한 파일로.</p></div>
+    <div><b>조건 자동 체크</b><p>지정한 문구 포함 여부, 좋아요·팔로우 여부를 자동으로 확인해요.</p></div>
+    <div><b>공정한 추첨</b><p>태그 수만큼 응모권 가중치, 당첨·예비 인원 설정, 추첨 번호로 결과 재현.</p></div>
+    <div><b>앱 안에서 로그인</b><p>평소 쓰는 인스타그램 계정으로 앱 안에서 바로 로그인해요.</p></div>
+    <div><b>4가지 스타일</b><p>기본 · 리퀴드 글래스 · 애니 · 팝. 취향대로 화면을 바꿀 수 있어요.</p></div>
+    <div><b>기록 보관</b><p>지난 수집·추첨 결과를 언제든 다시 불러와 확인해요.</p></div>
+  </div></div>
 </div></section>
 
-<section class="sec" id="install" style="padding-top:20px"><div class="wrap">
-  <div class="sec-hd"><div><div class="eyebrow">How to install</div><h2>설치 방법</h2></div><p>이미지를 누르면 크게 볼 수 있어요.</p></div>
-  <div class="steps">
+<section class="wrap blk"><div class="row rule">
+  <div class="k lbl">Screens</div>
+  <div class="v" style="grid-column:4/13"><div class="shots">
+    <figure><div class="ph"><img src="img/shot-basic.jpg" alt=""></div><figcaption>댓글 수집 — 기본 스타일</figcaption></figure>
+    <figure><div class="ph"><img src="img/shot-draw.jpg" alt=""></div><figcaption>이벤트 추첨</figcaption></figure>
+    <figure><div class="ph"><img src="img/shot-pop.jpg" alt=""></div><figcaption>팝 스타일</figcaption></figure>
+  </div></div>
+</div></section>
+
+<section class="wrap blk" id="install"><div class="row rule">
+  <div class="k lbl">How to Install<br><span style="font-size:12px">이미지를 누르면 크게 볼 수 있어요</span></div>
+  <div class="v" style="grid-column:4/13"><div class="steps">
     <a href="img/guide-1.jpg"><img src="img/guide-1.jpg" alt=""><span>1. 설치 파일 실행</span></a>
     <a href="img/guide-2.jpg"><img src="img/guide-2.jpg" alt=""><span>2. PC 보호 창 → 실행</span></a>
     <a href="img/guide-3.jpg"><img src="img/guide-3.jpg" alt=""><span>3. 설치 진행</span></a>
@@ -93,19 +99,22 @@
     <a href="img/guide-6.jpg"><img src="img/guide-6.jpg" alt=""><span>6. 인스타그램 로그인</span></a>
     <a href="img/guide-7.jpg"><img src="img/guide-7.jpg" alt=""><span>7. 로그인 창</span></a>
     <a href="img/guide-8.jpg"><img src="img/guide-8.jpg" alt=""><span>8. 댓글 수집 시작</span></a>
-  </div>
+  </div></div>
 </div></section>
 
-<section class="sec faq" id="faq" style="padding-top:20px"><div class="wrap" style="max-width:860px">
-  <div class="sec-hd"><div><div class="eyebrow">FAQ</div><h2>자주 묻는 질문</h2></div></div>
+<section class="wrap blk faq" id="faq" style="padding-bottom:140px"><div class="row rule">
+  <div class="k lbl">FAQ</div>
+  <div class="v">
   <details open><summary>등록 코드는 어디서 받나요?</summary><p>이 프로그램은 등록 코드가 있어야 사용할 수 있어요. 프로그램을 전달한 담당자에게 받은 코드(INSTA-XXXX-XXXX-XXXX)를 처음 실행할 때 입력하세요. 코드 하나는 정해진 수의 PC에서만 쓸 수 있어요.</p></details>
   <details><summary>‘Windows의 PC 보호’ 창이 떠요.</summary><p>개인 스튜디오가 만든 프로그램이라 처음 한 번 나오는 안내예요. ‘추가 정보’를 누른 뒤 ‘실행’을 누르면 설치가 진행돼요.</p></details>
   <details><summary>인스타그램 비밀번호가 어딘가로 전송되나요?</summary><p>아니요. 로그인은 인스타그램 공식 로그인 화면에서 직접 이루어지고, 로그인 상태는 내 PC에만 저장돼요.</p></details>
   <details><summary>PC를 바꾸면 어떻게 하나요?</summary><p>담당자에게 문의하면 등록된 PC를 옮겨 드려요.</p></details>
   <details><summary>Mac에서도 쓸 수 있나요?</summary><p>현재는 Windows 10·11만 지원해요. Mac 버전은 준비 중이에요.</p></details>
+  </div>
 </div></section>
+</main>
 
-<footer class="ft"><div class="wrap"><span>© 2026 UNHIDE 언하이드</span><a href="../../">unhide.co.kr</a></div></footer>
+<footer class="ft"><div class="wrap"><span>© 2026 UNHIDE. All rights reserved.</span><a href="mailto:phyudesign@unhide.co.kr">phyudesign@unhide.co.kr</a></div></footer>
 
 <div class="lb" id="lb" role="dialog" aria-label="이미지 크게 보기"><img alt=""></div>
 <script>
