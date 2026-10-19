@@ -40,8 +40,8 @@ window.WORKS = [
     desc: "Callaway PARADYME 출시를 알리는 티저 TV 광고.", media: [H("callaway-20", "PARADYME TEASER", "TVC · 15s")] },
   { key: "callaway-60", cat: "tvcf", client: "Callaway", title: "Callaway TourBan", meta: "TVC · 60s", thumb: "assets/hero/callaway-60.jpg",
     desc: "Callaway TourBan TV 광고 60초 편.", media: [H("callaway-60", "TourBan", "TVC · 60s")] },
-  { key: "dole", cat: "tvcf", client: "Dole", title: "Dole Banana", meta: "TVC · 15s", thumb: "assets/hero/dole.jpg",
-    desc: "Dole Banana TV 광고.", media: [H("dole", "Dole Banana", "TVC · 15s")] },
+  { key: "dole", cat: "tvcf", client: "Dole", title: "Dole", meta: "TVC · 15s", thumb: "assets/hero/dole.jpg",
+    desc: "Dole TV 광고.", media: [H("dole", "Dole", "TVC · 15s")] },
   { key: "starbucks", cat: "tvcf", client: "Starbucks", title: "Starbucks RTD", meta: "TVC · 30s", thumb: "assets/hero/starbucks.jpg",
     desc: "Starbucks RTD TV 광고.", media: [H("starbucks", "Starbucks RTD", "TVC · 30s")] },
 
