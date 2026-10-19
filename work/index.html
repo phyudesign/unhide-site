@@ -24,31 +24,35 @@ body{background:#0c0c0c;color:#f2f2f2}
 .tabs a span{opacity:.55;margin-left:6px;font-variant-numeric:tabular-nums}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:56px 24px;padding:0 var(--pad) 140px}
 .item .im{position:relative;aspect-ratio:16/9;overflow:hidden;background:#1a1a1a}
-.item .im img,.item .im video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.item .im img{transition:transform .9s cubic-bezier(.2,.7,.2,1)}
-.item .im video{opacity:0;transition:opacity .5s}
-.item:hover .im video.on{opacity:1}
+.item .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+/* 썸네일: 검정 50% 매트 + 가운데 재생 아이콘 */
+.item .im:not(.app)::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.5);transition:background-color .35s}
+.item .im .play{position:absolute;left:50%;top:50%;z-index:2;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;border:1.5px solid rgba(255,255,255,.85);display:grid;place-items:center;transition:transform .35s,background-color .35s}
+.item .im .play svg{width:20px;height:20px;margin-left:3px;fill:#fff}
 .item:hover .im img{transform:scale(1.03)}
+.item:hover .im::after{background:rgba(0,0,0,.35)}
+.item:hover .im .play{transform:scale(1.08);background:rgba(255,255,255,.12)}
+.item{cursor:pointer}
 .item .im.app{background:#e9e9e7;display:flex;align-items:center;justify-content:center}
 .item .im.app img{position:static;width:76%;height:auto;border-radius:8px;box-shadow:0 24px 60px rgba(0,0,0,.25)}
 .item h3{font-size:17px;font-weight:500;margin-top:16px;letter-spacing:-.01em}
 .item p{font-size:13px;color:var(--sub);margin-top:4px}
-/* 작품 플레이어 (클릭한 작품 줄 아래에 펼쳐짐) */
-.item{cursor:pointer}
-.item.sel h3{text-decoration:underline;text-underline-offset:4px}
-.player{scroll-margin-top:96px;grid-column:1/-1;display:grid;grid-template-columns:repeat(12,1fr);column-gap:24px;padding:8px 0 40px;border-bottom:1px solid #262626;animation:pin .5s cubic-bezier(.2,.7,.2,1)}
-@keyframes pin{from{opacity:0;transform:translateY(14px)}}
-.player .vid{grid-column:1/-1;position:relative;background:#000;aspect-ratio:16/9;width:min(100%,calc(66vh*16/9))}
-.player video{width:100%;height:100%;display:block;background:#000}
-.player .info{grid-column:1/8;padding-top:28px}
-.player .info .lbl{color:var(--sub);font-size:12px}
-.player .info h2{font-size:clamp(24px,2.6vw,38px);font-weight:500;letter-spacing:-.03em;margin:10px 0 6px}
-.player .info .meta{font-size:13px;color:var(--sub)}
-.player .info .desc{font-size:15px;line-height:1.75;color:#bdbdbd;margin-top:22px;max-width:640px}
-.player .side{grid-column:9/13;padding-top:28px;display:flex;justify-content:flex-end;align-items:flex-start;gap:8px}
-.player .side button{all:unset;cursor:pointer;font-size:13px;padding:8px 16px;border:1px solid #333;border-radius:999px;color:#bdbdbd}
-.player .side button:hover{color:#fff;border-color:#777}
-@media (max-width:900px){.player .info,.player .side{grid-column:1/-1}.player .side{justify-content:flex-start;padding-top:18px}}
+/* 작품 팝업 플레이어 */
+.pop{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:40px;background:rgba(0,0,0,.86);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.pop.on{display:flex;animation:pf .3s ease}
+@keyframes pf{from{opacity:0}}
+.pop .box{width:min(1200px,100%,calc((100vh - 220px)*16/9));animation:pu .45s cubic-bezier(.2,.7,.2,1)}
+@keyframes pu{from{transform:translateY(18px);opacity:0}}
+.pop video{display:block;width:100%;aspect-ratio:16/9;background:#000}
+.pop .info{display:flex;justify-content:space-between;gap:24px;padding-top:20px}
+.pop .info .lbl{color:var(--sub);font-size:12px}
+.pop .info h2{font-size:clamp(20px,2.2vw,30px);font-weight:500;letter-spacing:-.03em;margin:6px 0 4px}
+.pop .info .meta{font-size:13px;color:var(--sub)}
+.pop .info .desc{font-size:14px;line-height:1.7;color:#bdbdbd;margin-top:12px;max-width:640px}
+.pop .x{all:unset;cursor:pointer;position:absolute;right:22px;top:18px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#ddd}
+.pop .x:hover{background:rgba(255,255,255,.1);color:#fff}
+.pop .x svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.5;fill:none}
+@media (max-width:900px){.pop{padding:64px 0 24px;align-items:flex-start}.pop .box{width:100%;margin-top:8vh}.pop .info{padding:18px 20px 0}.pop .x{right:10px;top:10px}}
 .empty{grid-column:1/-1;border-top:1px solid #262626;padding-top:28px;color:var(--sub);font-size:14px}
 .ft{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:0 var(--pad) 30px;font-size:12px;color:#5f5f5f}
 .ft .mail{color:#7a7a7a}.ft .mail:hover{color:#bdbdbd}
@@ -66,6 +70,12 @@ body{background:#0c0c0c;color:#f2f2f2}
 <main class="grid" id="grid"></main>
 <footer class="ft"><span>© 2026 unhide. All rights reserved.</span><a class="mail" href="mailto:phyudesign@unhide.co.kr">phyudesign@unhide.co.kr</a></footer>
 
+<div class="pop" id="pop" role="dialog" aria-modal="true" aria-label="작품 보기">
+  <button type="button" class="x" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  <div class="box"><video controls playsinline preload="none"></video>
+    <div class="info"><div><span class="lbl" id="p-cat"></span><h2 id="p-title"></h2><p class="meta" id="p-meta"></p><p class="desc" id="p-desc"></p></div></div></div>
+</div>
+
 <script src="../assets/works.js"></script>
 <script>
 const c = new URLSearchParams(location.search).get('c') || 'all';
@@ -80,44 +90,35 @@ if (c === 'apps') {
   grid.innerHTML = APPS.map((a) => `<a class="item" href="../${a.href}"><div class="im app"><img src="../${a.img}" alt=""></div><h3>${a.title}</h3><p>${a.meta} · 자세히 보기 →</p></a>`).join('');
 } else {
   const list = c === 'all' ? WORKS : WORKS.filter((w) => w.cat === c);
-  grid.innerHTML = list.length ? list.map((w) => `<div class="item" data-key="${w.key}" role="button" tabindex="0" aria-label="${w.title} 재생"><div class="im"><img src="../assets/hero/${w.key}.jpg" alt=""><video muted playsinline loop preload="none" data-src="../assets/hero/${w.key}.mp4"></video></div><h3>${w.title}</h3><p>${w.meta}</p></div>`).join('')
+  grid.innerHTML = list.length ? list.map((w) => `<div class="item" data-key="${w.key}" role="button" tabindex="0" aria-label="${w.title} 재생"><div class="im"><img src="../assets/hero/${w.key}.jpg" alt=""><span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span></div><h3>${w.title}</h3><p>${w.meta}</p></div>`).join('')
     : '<p class="empty">새 작업을 준비하고 있어요.</p>';
 }
-// 마우스를 올리면 소리 없이 미리보기
-grid.querySelectorAll('.item').forEach((it) => {
-  const v = it.querySelector('video'); if (!v) return;
-  it.addEventListener('mouseenter', () => { if (!v.src) v.src = v.dataset.src; v.muted = true; v.play().then(() => v.classList.add('on')).catch(() => {}); });
-  it.addEventListener('mouseleave', () => v.pause());
-});
-// 작품을 누르면: 그 줄 바로 아래에 소리 있는 플레이어 + 작품 설명
+// 작품을 누르면 팝업 창에서 소리와 함께 재생
 const catName = (id) => (CATEGORIES.find((x) => x.id === id) || {}).name || '';
-let player = null;
-function closePlayer() {
-  if (!player) return;
-  const v = player.querySelector('video'); v.pause(); v.removeAttribute('src'); v.load();
-  player.remove(); player = null; grid.querySelectorAll('.item.sel').forEach((x) => x.classList.remove('sel'));
+const pop = document.getElementById('pop'), pv = pop.querySelector('video');
+function openWork(key) {
+  const w = WORKS.find((x) => x.key === key); if (!w) return;
+  document.getElementById('p-cat').textContent = catName(w.cat);
+  document.getElementById('p-title').textContent = w.title;
+  document.getElementById('p-meta').textContent = w.meta;
+  document.getElementById('p-desc').textContent = w.desc || '';
+  pv.poster = `../assets/hero/${w.key}.jpg`; pv.src = `../assets/work/${w.key}.mp4`;
+  pop.classList.add('on'); document.body.style.overflow = 'hidden';
+  pv.muted = false; pv.volume = 1; pv.play().catch(() => {});
+  pop.querySelector('.x').focus({ preventScroll: true });
 }
-function openWork(it) {
-  const w = WORKS.find((x) => x.key === it.dataset.key); if (!w) return;
-  const wasSame = it.classList.contains('sel'); closePlayer(); if (wasSame) return;
-  // 같은 줄의 마지막 아이템 뒤에 끼워 넣기
-  const items = [...grid.querySelectorAll('.item')], top = it.offsetTop;
-  let after = it; items.forEach((x) => { if (x.offsetTop === top) after = x; });
-  player = document.createElement('section'); player.className = 'player';
-  player.innerHTML = `<div class="vid"><video controls playsinline preload="auto" poster="../assets/hero/${w.key}.jpg" src="../assets/work/${w.key}.mp4"></video></div>
-    <div class="info"><span class="lbl">${catName(w.cat)}</span><h2>${w.title}</h2><p class="meta">${w.meta}</p>${w.desc ? `<p class="desc">${w.desc}</p>` : ''}</div>
-    <div class="side"><button type="button" class="cl">닫기 ✕</button></div>`;
-  after.after(player); it.classList.add('sel');
-  it.querySelector('video') && it.querySelector('video').pause();
-  const v = player.querySelector('video'); v.muted = false; v.volume = 1; v.play().catch(() => {});
-  player.querySelector('.cl').onclick = closePlayer;
-  setTimeout(() => player && player.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+function closeWork() {
+  if (!pop.classList.contains('on')) return;
+  pv.pause(); pv.removeAttribute('src'); pv.load();
+  pop.classList.remove('on'); document.body.style.overflow = '';
 }
 grid.querySelectorAll('.item[data-key]').forEach((it) => {
-  it.addEventListener('click', () => openWork(it));
-  it.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openWork(it); } });
+  it.addEventListener('click', () => openWork(it.dataset.key));
+  it.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openWork(it.dataset.key); } });
 });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePlayer(); });
+pop.querySelector('.x').addEventListener('click', closeWork);
+pop.addEventListener('click', (e) => { if (e.target === pop) closeWork(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeWork(); });
 </script>
 </body>
 </html>
