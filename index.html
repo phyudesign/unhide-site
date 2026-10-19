@@ -130,7 +130,7 @@ body{background:#0c0c0c;color:#f2f2f2}
   </footer>
 </section>
 
-<script src="assets/works.js?v=20261019b"></script>
+<script src="assets/works.js?v=20261019d"></script>
 <script>
 // 첫 화면 슬라이드: 영상(.mp4) 또는 이미지. 영상은 항상 소리 없이, 끝까지 재생된 뒤 다음으로 넘어갑니다.
 const SLIDES = [
@@ -217,7 +217,7 @@ document.getElementById('latest').innerHTML = LATEST_ITEMS.map((w, k) => `
 <section class="pn work"${k === 0 ? ' id="latest-1"' : ''}>
   <div class="split">
     <div class="txt">
-      <span class="lbl">Latest Work — ${(CATEGORIES.find((c) => c.id === w.cat) || {}).name || ''}</span>
+      <span class="lbl">Latest Work — ${(CATEGORIES.find((c) => c.id === [].concat(w.cat)[0]) || {}).name || ''}</span>
       <h2>${w.title}</h2><p class="meta">${w.meta}</p>
       ${w.desc ? `<p class="desc">${w.desc}</p>` : ''}
       <a class="more" href="work/?open=${w.work}&at=${w.at || 0}">See More</a>
@@ -228,7 +228,7 @@ document.getElementById('latest').innerHTML = LATEST_ITEMS.map((w, k) => `
 </section>`).join('');
 // 카테고리 메뉴
 document.getElementById('cats').innerHTML = CATEGORIES.map((c) => {
-  const n = c.id === 'apps' ? APPS.length : WORKS.filter((w) => w.cat === c.id).length;
+  const n = c.id === 'apps' ? APPS.length : WORKS.filter((w) => hasCat(w, c.id)).length;
   return `<a href="${c.href || 'work/?c=' + c.id}"><span class="t">${c.name}</span><span class="d">${c.ko}</span><span class="c">${String(n).padStart(2, '0')}</span></a>`;
 }).join('');
 // 작업 화면: 화면에 들어오면 소리 없이 재생, 벗어나면 정지
