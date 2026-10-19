@@ -23,6 +23,11 @@ body{background:#0c0c0c;color:#f2f2f2}
 
 /* ── 첫 화면 쇼릴 ── */
 .hero{background:#000;touch-action:pan-y}
+/* 창업(2025.04) 이후 흐르는 시간 — 화면을 거의 채우는 반투명 흰 숫자 */
+.clock{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;pointer-events:none;
+  font-size:min(16.5vw,30vh);font-weight:200;letter-spacing:-.04em;line-height:1;color:rgba(255,255,255,.22);
+  font-variant-numeric:tabular-nums;font-feature-settings:"tnum";white-space:nowrap;mix-blend-mode:screen}
+.clock span{display:inline-block;opacity:.7;margin:0 -.04em}
 .hero .slide{position:absolute;inset:0;opacity:0;transition:opacity 1.4s ease}
 .hero .slide.on{opacity:1}
 .hero .slide img,.hero .slide video{width:100%;height:100%;object-fit:cover;opacity:.5;transform:scale(1.06);transition:transform 7s linear}
@@ -104,6 +109,7 @@ body{background:#0c0c0c;color:#f2f2f2}
 <!-- 01 첫 화면 쇼릴 — 아래 SLIDES 목록에서 관리 -->
 <section class="pn hero" id="top">
   <div id="slides"></div>
+  <div class="clock" id="since" aria-label="언하이드 창업 이후 흐른 시간"></div>
   <div class="cap"><div id="cap-t"></div>
     <div class="ctl">
       <div class="row2">
@@ -211,6 +217,16 @@ bar.addEventListener('click', (e) => {
   const r = bar.getBoundingClientRect(); v.currentTime = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)) * v.duration;
 });
 
+// 창업 이후 시간 (2025년 4월 1일 0시, 한국 시간 기준)
+(() => {
+  const START = Date.parse('2025-04-01T00:00:00+09:00'), el = document.getElementById('since');
+  const p2 = (n) => String(n).padStart(2, '0');
+  const tick = () => {
+    const t = Math.max(0, Math.floor((Date.now() - START) / 1000));
+    el.innerHTML = `${Math.floor(t / 3600)}<span>:</span>${p2(Math.floor(t / 60) % 60)}<span>:</span>${p2(t % 60)}`;
+  };
+  tick(); setInterval(tick, 1000);
+})();
 // 최신 작업 3개
 const LATEST_ITEMS = LATEST.map((l) => { const w = findWork(l.work); return w ? { ...l, cat: w.cat, desc: w.desc } : null; }).filter(Boolean);
 document.getElementById('latest').innerHTML = LATEST_ITEMS.map((w, k) => `
