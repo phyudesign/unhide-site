@@ -76,7 +76,9 @@ body{background:#0c0c0c;color:#f2f2f2}
 .cats .d{font-size:13px;color:var(--sub)}
 .cats .c{font-size:12px;color:#5f5f5f;font-variant-numeric:tabular-nums;min-width:28px;text-align:right}
 .cats a:hover .t{color:#fff;transform:translateX(8px)}
-.menu .ft{position:absolute;left:0;right:0;bottom:0;padding:0 var(--pad) 30px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12px;color:#5f5f5f}
+.menu .ft{position:absolute;left:0;right:0;bottom:0;padding:0 var(--pad) 30px;font-size:12px;color:#5f5f5f}
+.menu .ft .motto{font-size:13px;color:#8e8e8e;letter-spacing:.01em;margin-bottom:14px}
+.menu .ft .fr{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid #222;padding-top:14px}
 .menu .ft .mail{color:#7a7a7a;transition:color .2s}.menu .ft .mail:hover{color:#bdbdbd}
 
 @media (max-width:900px){
@@ -86,7 +88,7 @@ body{background:#0c0c0c;color:#f2f2f2}
   .work .txt .desc{margin-top:16px}.work .txt .more{margin-top:18px}
   .cue{display:none}
   .cats a{grid-template-columns:1fr auto;padding:14px 0}.cats .d{display:none}
-  .menu .ft{flex-direction:column;gap:6px}
+  .menu .ft .fr{flex-direction:column;gap:6px}
   .bar{width:96px}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.work .txt,.work .media{opacity:1;transform:none}}
@@ -123,8 +125,8 @@ body{background:#0c0c0c;color:#f2f2f2}
     <nav class="cats" id="cats"></nav>
   </div>
   <footer class="ft">
-    <span>언하이드 — 광고 · 캐릭터 · 이미지 · 콘텐츠를 만드는 서울의 크리에이티브 스튜디오</span>
-    <span><a class="mail" href="mailto:phyudesign@unhide.co.kr">phyudesign@unhide.co.kr</a> · © 2026 UNHIDE</span>
+    <p class="motto">We — Find what matters. Share what stirs hearts. Make life beautifully visible — unhide</p>
+    <div class="fr"><span>© 2026 unhide. All rights reserved.</span><a class="mail" href="mailto:phyudesign@unhide.co.kr">phyudesign@unhide.co.kr</a></div>
   </footer>
 </section>
 

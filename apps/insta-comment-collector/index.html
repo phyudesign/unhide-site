@@ -21,11 +21,15 @@
 .feat div{border-top:1px solid var(--ink);padding-top:16px}
 .feat b{display:block;font-weight:600;margin-bottom:6px}
 .feat p{color:var(--sub);font-size:14px}
-.shots{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.shots{display:grid;grid-template-columns:repeat(2,1fr);gap:32px 24px}
 .shots figure{margin:0}
 .shots .ph{background:var(--panel);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;cursor:zoom-in}
 .shots .ph img{width:84%;border-radius:6px;box-shadow:0 14px 36px rgba(0,0,0,.14)}
 .shots figcaption,.steps span{font-size:13px;color:var(--sub);margin-top:12px;display:block}
+.ostab{display:inline-flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:999px;margin-bottom:28px}
+.ostab button{all:unset;cursor:pointer;font-size:13px;padding:7px 18px;border-radius:999px;color:var(--sub)}
+.ostab button.on{background:var(--ink);color:#fff}
+.steps[hidden]{display:none}
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:32px 24px}
 .steps img{border:1px solid var(--line);transition:opacity .2s;cursor:zoom-in}
 .steps a:hover img{opacity:.8}
@@ -57,11 +61,12 @@
       <p class="lead">게시물 주소만 넣으면 댓글·태그·좋아요·팔로우까지 엑셀로 정리하고, 조건을 충족한 참여자 중에서 공정하게 추첨해요.</p>
       <div class="dl">
         <a class="btn btn-p" id="dl-win" href="#" aria-disabled="true">Windows용 다운로드 ↓</a>
+        <a class="btn btn-p" id="dl-mac" href="#" aria-disabled="true">Mac용 다운로드 ↓</a>
         <a class="btn btn-g" href="#install">설치 방법</a>
-        <small id="dl-note">Windows 10·11 · 버전 <span id="dl-ver">4.2.0</span> · 설치 후 <b>등록 코드</b>가 필요해요</small>
+        <small>Windows 10·11 <span id="v-win"></span> · macOS 12 이상 (Apple 실리콘 M1~) <span id="v-mac"></span> · <a id="dl-mac-intel" href="#" style="text-decoration:underline">인텔 맥용</a><br>두 버전 모두 설치 후 <b>등록 코드</b>가 필요해요</small>
       </div>
     </div>
-    <div class="tags">Windows<br>Event Tool<br>2026</div>
+    <div class="tags">Windows<br>macOS<br>Event Tool<br>2026</div>
   </div>
 </div></section>
 
@@ -74,7 +79,7 @@
     <div><b>조건 자동 체크</b><p>지정한 문구 포함 여부, 좋아요·팔로우 여부를 자동으로 확인해요.</p></div>
     <div><b>공정한 추첨</b><p>태그 수만큼 응모권 가중치, 당첨·예비 인원 설정, 추첨 번호로 결과 재현.</p></div>
     <div><b>앱 안에서 로그인</b><p>평소 쓰는 인스타그램 계정으로 앱 안에서 바로 로그인해요.</p></div>
-    <div><b>4가지 스타일</b><p>기본 · 리퀴드 글래스 · 애니 · 팝. 취향대로 화면을 바꿀 수 있어요.</p></div>
+    <div><b>3가지 스타일</b><p>기본 · 리퀴드 글래스 · 팝. 취향대로 화면을 바꿀 수 있어요.</p></div>
     <div><b>기록 보관</b><p>지난 수집·추첨 결과를 언제든 다시 불러와 확인해요.</p></div>
   </div></div>
 </div></section>
@@ -82,50 +87,79 @@
 <section class="wrap blk"><div class="row rule">
   <div class="k lbl">Screens</div>
   <div class="v" style="grid-column:4/13"><div class="shots">
-    <figure><div class="ph"><img src="img/shot-basic.jpg" alt=""></div><figcaption>댓글 수집 — 기본 스타일</figcaption></figure>
+    <figure><div class="ph"><img src="img/shot-basic.jpg" alt=""></div><figcaption>댓글 수집 — 기본</figcaption></figure>
     <figure><div class="ph"><img src="img/shot-draw.jpg" alt=""></div><figcaption>이벤트 추첨</figcaption></figure>
-    <figure><div class="ph"><img src="img/shot-pop.jpg" alt=""></div><figcaption>팝 스타일</figcaption></figure>
+    <figure><div class="ph"><img src="img/shot-glass.jpg" alt=""></div><figcaption>리퀴드 글래스</figcaption></figure>
+    <figure><div class="ph"><img src="img/shot-pop.jpg" alt=""></div><figcaption>팝</figcaption></figure>
   </div></div>
 </div></section>
 
 <section class="wrap blk" id="install"><div class="row rule">
   <div class="k lbl">How to Install<br><span style="font-size:12px">이미지를 누르면 크게 볼 수 있어요</span></div>
-  <div class="v" style="grid-column:4/13"><div class="steps">
-    <a href="img/guide-1.jpg"><img src="img/guide-1.jpg" alt=""><span>1. 설치 파일 실행</span></a>
-    <a href="img/guide-2.jpg"><img src="img/guide-2.jpg" alt=""><span>2. PC 보호 창 → 실행</span></a>
-    <a href="img/guide-3.jpg"><img src="img/guide-3.jpg" alt=""><span>3. 설치 진행</span></a>
-    <a href="img/guide-4.jpg"><img src="img/guide-4.jpg" alt=""><span>4. 등록 코드 입력</span></a>
-    <a href="img/guide-5.jpg"><img src="img/guide-5.jpg" alt=""><span>5. 첫 화면</span></a>
-    <a href="img/guide-6.jpg"><img src="img/guide-6.jpg" alt=""><span>6. 인스타그램 로그인</span></a>
-    <a href="img/guide-7.jpg"><img src="img/guide-7.jpg" alt=""><span>7. 로그인 창</span></a>
-    <a href="img/guide-8.jpg"><img src="img/guide-8.jpg" alt=""><span>8. 댓글 수집 시작</span></a>
-  </div></div>
+  <div class="v" style="grid-column:4/13">
+    <div class="ostab" role="tablist"><button type="button" data-os="win" class="on">Windows</button><button type="button" data-os="mac">Mac</button></div>
+    <div class="steps" data-pane="win">
+    <a href="img/guide-1.jpg"><img src="img/guide-1.jpg" alt="" loading="lazy"><span>1. 설치 파일 실행</span></a>
+    <a href="img/guide-2.jpg"><img src="img/guide-2.jpg" alt="" loading="lazy"><span>2. PC 보호 창 → 실행</span></a>
+    <a href="img/guide-3.jpg"><img src="img/guide-3.jpg" alt="" loading="lazy"><span>3. 설치 진행</span></a>
+    <a href="img/guide-4.jpg"><img src="img/guide-4.jpg" alt="" loading="lazy"><span>4. 등록 코드 입력</span></a>
+    <a href="img/guide-5.jpg"><img src="img/guide-5.jpg" alt="" loading="lazy"><span>5. 첫 화면</span></a>
+    <a href="img/guide-6.jpg"><img src="img/guide-6.jpg" alt="" loading="lazy"><span>6. 인스타그램 로그인</span></a>
+    <a href="img/guide-7.jpg"><img src="img/guide-7.jpg" alt="" loading="lazy"><span>7. 로그인 창</span></a>
+    <a href="img/guide-8.jpg"><img src="img/guide-8.jpg" alt="" loading="lazy"><span>8. 댓글 수집 시작</span></a>
+    </div>
+    <div class="steps" data-pane="mac" hidden>
+    <a href="img/mac-1.jpg"><img src="img/mac-1.jpg" alt="" loading="lazy"><span>1. .dmg 열고 앱 옮기기</span></a>
+    <a href="img/mac-2.jpg"><img src="img/mac-2.jpg" alt="" loading="lazy"><span>2. 처음 열 때 안내 → 완료</span></a>
+    <a href="img/mac-3.jpg"><img src="img/mac-3.jpg" alt="" loading="lazy"><span>3. 시스템 설정에서 허용</span></a>
+    <a href="img/mac-4.jpg"><img src="img/mac-4.jpg" alt="" loading="lazy"><span>4. 등록 코드 입력</span></a>
+    <a href="img/mac-5.jpg"><img src="img/mac-5.jpg" alt="" loading="lazy"><span>5. 첫 화면</span></a>
+    <a href="img/mac-6.jpg"><img src="img/mac-6.jpg" alt="" loading="lazy"><span>6. 앱에서 바로 로그인</span></a>
+    <a href="img/mac-7.jpg"><img src="img/mac-7.jpg" alt="" loading="lazy"><span>7. 로그인 창</span></a>
+    <a href="img/mac-8.jpg"><img src="img/mac-8.jpg" alt="" loading="lazy"><span>8. 댓글 수집 시작</span></a>
+    </div></div>
 </div></section>
 
 <section class="wrap blk faq" id="faq" style="padding-bottom:140px"><div class="row rule">
   <div class="k lbl">FAQ</div>
   <div class="v">
-  <details open><summary>등록 코드는 어디서 받나요?</summary><p>이 프로그램은 등록 코드가 있어야 사용할 수 있어요. 프로그램을 전달한 담당자에게 받은 코드(INSTA-XXXX-XXXX-XXXX)를 처음 실행할 때 입력하세요. 코드 하나는 정해진 수의 PC에서만 쓸 수 있어요.</p></details>
+  <details open><summary>등록 코드는 어디서 받나요?</summary><p>이 프로그램은 등록 코드가 있어야 사용할 수 있어요. 프로그램을 전달한 담당자에게 받은 코드(INSTA-XXXX-XXXX-XXXX)를 처음 실행할 때 입력하세요. Windows와 Mac 모두 같은 방식이고, 코드 하나는 정해진 수의 컴퓨터에서만 쓸 수 있어요.</p></details>
   <details><summary>‘Windows의 PC 보호’ 창이 떠요.</summary><p>개인 스튜디오가 만든 프로그램이라 처음 한 번 나오는 안내예요. ‘추가 정보’를 누른 뒤 ‘실행’을 누르면 설치가 진행돼요.</p></details>
-  <details><summary>인스타그램 비밀번호가 어딘가로 전송되나요?</summary><p>아니요. 로그인은 인스타그램 공식 로그인 화면에서 직접 이루어지고, 로그인 상태는 내 PC에만 저장돼요.</p></details>
-  <details><summary>PC를 바꾸면 어떻게 하나요?</summary><p>담당자에게 문의하면 등록된 PC를 옮겨 드려요.</p></details>
-  <details><summary>Mac에서도 쓸 수 있나요?</summary><p>현재는 Windows 10·11만 지원해요. Mac 버전은 준비 중이에요.</p></details>
+  <details><summary>인스타그램 비밀번호가 어딘가로 전송되나요?</summary><p>아니요. 로그인은 인스타그램 공식 로그인 화면에서 직접 이루어지고, 로그인 상태는 내 컴퓨터에만 저장돼요.</p></details>
+  <details><summary>컴퓨터를 바꾸면 어떻게 하나요?</summary><p>담당자에게 문의하면 등록된 컴퓨터를 옮겨 드려요.</p></details>
+  <details><summary>Mac에서 ‘열 수 없습니다’ 창이 떠요.</summary><p>Apple 개발자 인증을 받지 않은 개인 스튜디오 앱이라 처음 한 번 나오는 안내예요. ‘완료’를 누른 뒤 시스템 설정 → 개인정보 보호 및 보안에서 ‘그래도 열기’를 누르면 다음부터는 바로 열려요. ‘휴지통으로 이동’은 누르지 마세요.</p></details>
+  <details><summary>내 Mac이 Apple 실리콘인지 인텔인지 어떻게 알아요?</summary><p>화면 왼쪽 위 사과 메뉴 → ‘이 Mac에 관하여’에서 칩이 ‘Apple M1·M2·M3·M4…’로 나오면 Apple 실리콘, ‘Intel’로 나오면 인텔 맥용을 받으세요.</p></details>
   </div>
 </div></section>
 </main>
 
-<footer class="ft"><div class="wrap"><span>© 2026 UNHIDE. All rights reserved.</span><a href="mailto:phyudesign@unhide.co.kr">phyudesign@unhide.co.kr</a></div></footer>
+<footer class="ft"><div class="wrap"><span>© 2026 unhide. All rights reserved.</span><a href="mailto:phyudesign@unhide.co.kr">phyudesign@unhide.co.kr</a></div></footer>
 
 <div class="lb" id="lb" role="dialog" aria-label="이미지 크게 보기"><img alt=""></div>
 <script>
-// 다운로드: 서버의 latest.json을 읽어 항상 최신 설치 파일로 연결 (윈도우판이 새로 빌드되면 자동 갱신)
-const LATEST = "https://udfluclrwnnxlwfpmmim.supabase.co/storage/v1/object/public/downloads/insta-comment-collector/latest.json";
-const a = document.getElementById('dl-win');
-fetch(LATEST + '?t=' + Date.now()).then((r) => r.ok ? r.json() : null).then((j) => {
-  if (!j || !j.url) return;
-  a.href = j.url; a.removeAttribute('aria-disabled'); a.setAttribute('download', '');
-  document.getElementById('dl-ver').textContent = j.version + (j.size ? ` · ${(j.size / 1048576).toFixed(0)}MB` : '');
-}).catch(() => {});
+// 다운로드: 서버의 latest.json을 읽어 항상 최신 설치 파일로 연결 (새로 빌드되면 자동 갱신)
+const BASE = "https://udfluclrwnnxlwfpmmim.supabase.co/storage/v1/object/public/downloads/";
+function hook(app, id, verId) {
+  const a = document.getElementById(id);
+  fetch(BASE + app + '/latest.json?t=' + Date.now()).then((r) => r.ok ? r.json() : null).then((j) => {
+    if (!j || !j.url) return;
+    a.href = j.url; a.removeAttribute('aria-disabled'); a.setAttribute('download', '');
+    if (verId) document.getElementById(verId).textContent = `v${j.version}` + (j.size ? ` · ${(j.size / 1048576).toFixed(0)}MB` : '');
+  }).catch(() => {});
+}
+hook('insta-comment-collector', 'dl-win', 'v-win');
+hook('insta-comment-collector-mac', 'dl-mac', 'v-mac');
+hook('insta-comment-collector-mac-intel', 'dl-mac-intel');
+// 맥에서 접속하면 Mac 버튼과 Mac 설치 방법을 먼저
+const isMac = /Mac/i.test(navigator.platform || navigator.userAgent);
+if (isMac) { const d = document.querySelector('.dl'); d.insertBefore(document.getElementById('dl-mac'), d.firstChild); document.getElementById('dl-win').classList.replace('btn-p', 'btn-g'); }
+else document.getElementById('dl-mac').classList.replace('btn-p', 'btn-g');
+function showOS(os) {
+  document.querySelectorAll('.ostab button').forEach((b) => b.classList.toggle('on', b.dataset.os === os));
+  document.querySelectorAll('[data-pane]').forEach((p) => (p.hidden = p.dataset.pane !== os));
+}
+document.querySelectorAll('.ostab button').forEach((b) => b.addEventListener('click', () => showOS(b.dataset.os)));
+if (isMac) showOS('mac');
 const lb = document.getElementById('lb');
 document.querySelectorAll('.steps a, .shots img').forEach((el) => el.addEventListener('click', (e) => {
   e.preventDefault(); lb.querySelector('img').src = el.href || el.src; lb.classList.add('on');
