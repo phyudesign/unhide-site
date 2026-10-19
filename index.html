@@ -8,146 +8,155 @@
 <link rel="icon" href="assets/logo/favicon.png">
 <link rel="stylesheet" href="assets/site.css">
 <style>
-body{background:#0c0c0c}
-/* ── 첫 화면: 전체 화면 포트폴리오 슬라이드(영상/이미지) ── */
-.hero{position:relative;height:100vh;height:100svh;min-height:560px;overflow:hidden;background:#000;color:#fff}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+body{background:#0c0c0c;color:#f2f2f2}
+:root{--sub:#8b8b8b}
+/* 고정 상단: 로고 + 메뉴 (배경 띠 없음, 밝은 화면에서도 보이도록 difference) */
+.top{position:fixed;inset:0 0 auto;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:28px var(--pad);mix-blend-mode:difference;pointer-events:none}
+.top a{pointer-events:auto}
+.top .logo img{height:34px;width:auto}
+.top nav{display:flex;gap:26px;font-size:14px}
+.top nav a{color:rgba(255,255,255,.8);transition:color .2s}.top nav a:hover{color:#fff}
+
+/* 한 화면 = 한 콘텐츠 */
+.pn{position:relative;height:100vh;height:100svh;min-height:560px;overflow:hidden;scroll-snap-align:start;scroll-snap-stop:always;background:#0c0c0c}
+
+/* ── 첫 화면 쇼릴 ── */
+.hero{background:#000}
 .hero .slide{position:absolute;inset:0;opacity:0;transition:opacity 1.4s ease}
 .hero .slide.on{opacity:1}
 .hero .slide img,.hero .slide video{width:100%;height:100%;object-fit:cover;opacity:.5;transform:scale(1.06);transition:transform 7s linear}
 .hero .slide.on img,.hero .slide.on video{transform:scale(1)}
-/* 검정 매트 위 50% 투명도 + 스크린 느낌(비네팅 · 아주 옅은 주사선) */
 .hero::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 3px);mix-blend-mode:multiply}
 .hero::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 55%,rgba(0,0,0,.55) 100%),linear-gradient(180deg,rgba(0,0,0,.25) 0,rgba(0,0,0,0) 20%,rgba(0,0,0,0) 75%,rgba(0,0,0,.35) 100%)}
-.top{position:absolute;inset:0 0 auto;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:28px var(--pad)}
-.top .logo img{height:34px;width:auto}
-.top nav{display:flex;gap:26px;font-size:14px}
-.top nav a{color:rgba(255,255,255,.78);transition:color .2s}.top nav a:hover{color:#fff}
-.cap{position:absolute;left:var(--pad);right:var(--pad);bottom:46px;z-index:5;display:flex;justify-content:space-between;align-items:flex-end;font-size:13px;color:rgba(255,255,255,.85)}
+.cap{position:absolute;left:var(--pad);right:var(--pad);bottom:34px;z-index:5;display:flex;justify-content:space-between;align-items:flex-end;font-size:13px;color:rgba(255,255,255,.85)}
 .cap b{display:block;font-weight:600;color:#fff;font-size:14px}
-.cap .num{font-variant-numeric:tabular-nums;letter-spacing:.06em}
-.cap .ctl{display:flex;align-items:center;gap:14px}
-.cap .ctl button{all:unset;cursor:pointer;width:28px;height:28px;display:grid;place-items:center;border-radius:50%;color:rgba(255,255,255,.75);transition:color .2s,background-color .2s}
-.cap .ctl button:hover{color:#fff;background:rgba(255,255,255,.12)}
-.cap .ctl button:focus-visible{outline:1px solid #fff;outline-offset:2px}
-.cap .ctl svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.5;fill:none}
-/* 얇은 재생바 — 클릭하면 그 위치로 이동 */
-.bar{position:absolute;left:var(--pad);right:var(--pad);bottom:22px;z-index:5;height:13px;display:flex;align-items:center;cursor:pointer}
-.bar i{position:relative;display:block;width:100%;height:1px;background:rgba(255,255,255,.22);transition:height .2s}
+.ctl{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.ctl .row2{display:flex;align-items:center;gap:10px}
+.ctl .num{font-variant-numeric:tabular-nums;letter-spacing:.06em;min-width:56px;text-align:center}
+.ctl button{all:unset;cursor:pointer;width:26px;height:26px;display:grid;place-items:center;border-radius:50%;color:rgba(255,255,255,.75);transition:color .2s,background-color .2s}
+.ctl button:hover{color:#fff;background:rgba(255,255,255,.12)}
+.ctl button:focus-visible{outline:1px solid #fff;outline-offset:2px}
+.ctl svg{width:13px;height:13px;stroke:currentColor;stroke-width:1.5;fill:none}
+/* 재생바: 숫자 아래 짧고 얇게 */
+.bar{width:132px;height:11px;display:flex;align-items:center;cursor:pointer}
+.bar i{position:relative;display:block;width:100%;height:1px;background:rgba(255,255,255,.25);transition:height .2s}
 .bar i b{position:absolute;left:0;top:0;bottom:0;width:0;background:#fff}
-.bar:hover i{height:3px}
+.bar:hover i{height:2px}
 
-/* ── 스크롤 아래: 블랙 섹션 ── */
-.dark{background:#0c0c0c;color:#f2f2f2;--sub:#8b8b8b;--line:#262626}
-.dark .lbl{color:var(--sub)}
-.index{padding-top:140px;padding-bottom:40px}
-.index a{display:grid;grid-template-columns:repeat(12,1fr);column-gap:24px;align-items:baseline;border-top:1px solid var(--line);padding:26px 0;transition:color .25s}
-.index a:last-child{border-bottom:1px solid var(--line)}
-.index a .n{grid-column:1/2;font-size:13px;color:var(--sub)}
-.index a .t{grid-column:2/8;font-size:clamp(32px,4.6vw,68px);font-weight:500;letter-spacing:-.035em;line-height:1.05}
-.index a .d{grid-column:8/12;font-size:14px;color:var(--sub)}
-.index a .ar{grid-column:12/13;text-align:right;font-size:22px;transition:transform .3s}
-.index a:hover{color:#fff}.index a:hover .t{color:var(--accent-l)}.index a:hover .ar{transform:translateX(6px)}
-.dark .sec{padding:150px 0 0}
-.dark .rule{border-color:var(--line)}
-.about p.big{font-size:clamp(20px,1.9vw,27px);line-height:1.6;letter-spacing:-.02em;max-width:860px}
-.svc{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:64px}
-.svc div{border-top:1px solid #f2f2f2;padding-top:16px}
-.svc b{display:block;font-weight:600;margin-bottom:6px}
-.svc span{font-size:14px;color:var(--sub)}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:56px 24px;margin-top:8px}
-.grid a,.grid .ph{display:block}
-.grid .im{aspect-ratio:16/9;overflow:hidden;background:#1a1a1a;display:flex;align-items:center;justify-content:center}
-.grid .im img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
-.grid a:hover .im img{transform:scale(1.04)}
-.grid .im.app{background:#e9e9e7}.grid .im.app img{width:76%;height:auto;object-fit:contain;border-radius:8px;box-shadow:0 24px 60px rgba(0,0,0,.25)}
-.grid .im.empty{border:1px dashed #333;background:transparent;color:#555;font-size:13px}
-.grid .work .im{position:relative}.grid .work video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s}.grid .work:hover video{opacity:1}
-.grid .wide{grid-column:1/-1}
-.grid h3{font-size:17px;font-weight:600;margin-top:16px;letter-spacing:-.01em}
-.grid p{font-size:13px;color:var(--sub);margin-top:4px}
-.contact{padding-bottom:150px!important}
-.contact a.mail{font-size:clamp(30px,4.4vw,64px);font-weight:500;letter-spacing:-.03em;border-bottom:2px solid currentColor;line-height:1.2;transition:color .2s}
-.contact a.mail:hover{color:var(--accent-l)}
-.contact p{color:var(--sub);margin-top:22px}
-.dark .ft{border-top:1px solid var(--line);color:var(--sub)}
-:root{--accent-l:#e2667f}
+/* ── 작업 화면 ── */
+.work .media{position:absolute;inset:0}
+.work .media img,.work .media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.work .media video{opacity:0;transition:opacity .8s}
+.work .media video.on{opacity:1}
+.work::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.3) 0,rgba(0,0,0,0) 18%,rgba(0,0,0,0) 60%,rgba(0,0,0,.6) 100%)}
+.pcap{position:absolute;left:var(--pad);right:var(--pad);bottom:40px;z-index:3;display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+.pcap .lbl{display:block;font-size:12px;color:rgba(255,255,255,.7);margin-bottom:10px;letter-spacing:.02em}
+.pcap h2{font-size:clamp(26px,3.2vw,46px);font-weight:500;letter-spacing:-.03em;line-height:1.1}
+.pcap p{font-size:13px;color:rgba(255,255,255,.7);margin-top:8px}
+.pcap .more{margin-top:18px;color:inherit}
+.pn-n{font-size:13px;color:rgba(255,255,255,.7);font-variant-numeric:tabular-nums;letter-spacing:.06em;white-space:nowrap}
+.pn .media img,.pn .media video{transform:scale(1.04);transition:transform 1.6s cubic-bezier(.2,.7,.2,1),opacity .8s}
+.pn.in .media img,.pn.in .media video{transform:scale(1)}
+.pcap>div{opacity:0;transform:translateY(16px);transition:opacity .9s .2s,transform .9s .2s}
+.pn.in .pcap>div{opacity:1;transform:none}
+
+/* ── 앱 화면 (밝은 배경) ── */
+.apps{background:#e9e9e7;color:#111}
+.apps .shot{position:absolute;left:50%;top:46%;width:min(62vw,1000px);transform:translate(-50%,-50%)}
+.apps .shot img{width:100%;border-radius:10px;box-shadow:0 40px 90px rgba(0,0,0,.2)}
+.apps .pcap .lbl,.apps .pcap p,.apps .pn-n{color:#6f6f6f}
+
+/* ── 소개 ── */
+.about .in-wrap,.contact .in-wrap{position:absolute;inset:0;padding:0 var(--pad);display:flex;flex-direction:column;justify-content:center}
+.about .lbl{color:var(--sub);margin-bottom:28px}
+.about p.big{font-size:clamp(24px,2.6vw,40px);font-weight:500;line-height:1.45;letter-spacing:-.03em;max-width:1000px}
+.svc{position:absolute;left:var(--pad);right:var(--pad);bottom:40px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.svc div{border-top:1px solid #3a3a3a;padding-top:14px}
+.svc b{display:block;font-weight:500;font-size:14px;margin-bottom:4px}
+.svc span{font-size:13px;color:var(--sub)}
+
+/* ── 연락처 (작고 차분하게) ── */
+.contact .big{font-size:clamp(24px,2.6vw,40px);font-weight:500;letter-spacing:-.03em;line-height:1.3}
+.contact .mail{display:inline-block;margin-top:26px;font-size:14px;color:var(--sub);border-bottom:1px solid #3a3a3a;padding-bottom:2px;transition:color .2s,border-color .2s}
+.contact .mail:hover{color:#d8d8d8;border-color:#777}
+.contact .ft{position:absolute;left:0;right:0;bottom:0;padding:0 var(--pad) 32px;display:flex;justify-content:space-between;font-size:12px;color:#5f5f5f}
+.contact .ft img{height:18px;width:auto;opacity:.5}
+
 @media (max-width:900px){
-  .top nav{gap:16px;font-size:13px}
-  .index a{grid-template-columns:40px 1fr 24px}.index a .n{grid-column:1}.index a .t{grid-column:2}.index a .ar{grid-column:3}
-  .index a .d{grid-column:2/4;margin-top:6px}
-  .grid{grid-template-columns:1fr}.svc{grid-template-columns:1fr 1fr}
+  .top nav{gap:16px;font-size:13px}.top .logo img{height:26px}
+  .apps .shot{width:88vw}
+  .svc{grid-template-columns:1fr 1fr;gap:18px}
+  .bar{width:96px}
 }
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.pcap>div{opacity:1;transform:none}}
 </style>
 </head>
 <body>
 
-<!-- 첫 화면 — 슬라이드는 아래 SLIDES 목록에서 관리 -->
-<section class="hero" id="top">
+<header class="top">
+  <a class="logo" href="#top"><img src="assets/logo/unhide-light.png" alt="UNHIDE 언하이드"></a>
+  <nav><a href="#work">Work</a><a href="#apps">Apps</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
+</header>
+
+<!-- 01 첫 화면 쇼릴 — 아래 SLIDES 목록에서 관리 -->
+<section class="pn hero" id="top">
   <div id="slides"></div>
-  <header class="top">
-    <a class="logo" href="./"><img src="assets/logo/unhide-light.png" alt="UNHIDE 언하이드"></a>
-    <nav><a href="#about">About</a><a href="#work">Work</a><a href="#apps">Apps</a><a href="#contact">Contact</a></nav>
-  </header>
   <div class="cap"><div id="cap-t"></div>
     <div class="ctl">
-      <button type="button" id="prev" aria-label="이전 영상"><svg viewBox="0 0 16 16"><path d="M10 3 5 8l5 5"/></svg></button>
-      <span class="num" id="cap-n"></span>
-      <button type="button" id="next" aria-label="다음 영상"><svg viewBox="0 0 16 16"><path d="m6 3 5 5-5 5"/></svg></button>
+      <div class="row2">
+        <button type="button" id="prev" aria-label="이전 영상"><svg viewBox="0 0 16 16"><path d="M10 3 5 8l5 5"/></svg></button>
+        <span class="num" id="cap-n"></span>
+        <button type="button" id="next" aria-label="다음 영상"><svg viewBox="0 0 16 16"><path d="m6 3 5 5-5 5"/></svg></button>
+      </div>
+      <div class="bar" id="bar" aria-hidden="true"><i><b id="bar-f"></b></i></div>
     </div>
   </div>
-  <div class="bar" id="bar" aria-hidden="true"><i><b id="bar-f"></b></i></div>
 </section>
 
-<div class="dark">
-  <!-- 하위 메뉴 인덱스 -->
-  <section class="wrap index" aria-label="메뉴">
-    <a href="#about"><span class="n">01</span><span class="t">About</span><span class="d">스튜디오 소개와 하는 일</span><span class="ar">→</span></a>
-    <a href="#work"><span class="n">02</span><span class="t">Work</span><span class="d">광고 · 캐릭터 · 이미지 · 콘텐츠 포트폴리오</span><span class="ar">→</span></a>
-    <a href="#apps"><span class="n">03</span><span class="t">Apps</span><span class="d">직접 만든 도구 — 다운로드</span><span class="ar">→</span></a>
-    <a href="#contact"><span class="n">04</span><span class="t">Contact</span><span class="d">프로젝트 · 협업 문의</span><span class="ar">→</span></a>
-  </section>
+<section class="pn work" id="work">
+  <div class="media"><img src="assets/hero/hidie.jpg" alt=""><video muted playsinline loop preload="none" data-src="assets/hero/hidie.mp4"></video></div>
+  <div class="pcap"><div><span class="lbl">Selected Work — Original</span><h2>HIDIE TEASER</h2><p>FILM · 10s</p></div><span class="pn-n">01 / 08</span></div>
+</section>
+<section class="pn work">
+  <div class="media"><img src="assets/hero/starbucks.jpg" alt=""><video muted playsinline loop preload="none" data-src="assets/hero/starbucks.mp4"></video></div>
+  <div class="pcap"><div><span class="lbl">Selected Work — Advertising</span><h2>Starbucks RTD</h2><p>TVC · 30s</p></div><span class="pn-n">02 / 08</span></div>
+</section>
+<section class="pn work">
+  <div class="media"><img src="assets/hero/callaway-60.jpg" alt=""><video muted playsinline loop preload="none" data-src="assets/hero/callaway-60.mp4"></video></div>
+  <div class="pcap"><div><span class="lbl">Selected Work — Advertising</span><h2>Callaway TourBan</h2><p>TVC · 60s</p></div><span class="pn-n">03 / 08</span></div>
+</section>
+<section class="pn work">
+  <div class="media"><img src="assets/hero/dole.jpg" alt=""><video muted playsinline loop preload="none" data-src="assets/hero/dole.mp4"></video></div>
+  <div class="pcap"><div><span class="lbl">Selected Work — Advertising</span><h2>Dole Banana</h2><p>TVC · 15s</p></div><span class="pn-n">04 / 08</span></div>
+</section>
+<section class="pn work">
+  <div class="media"><img src="assets/hero/callaway-20.jpg" alt=""><video muted playsinline loop preload="none" data-src="assets/hero/callaway-20.mp4"></video></div>
+  <div class="pcap"><div><span class="lbl">Selected Work — Advertising</span><h2>Callaway PARADYME TEASER</h2><p>TVC · 15s</p></div><span class="pn-n">05 / 08</span></div>
+</section>
 
-  <section class="sec about" id="about"><div class="wrap">
-    <div class="row rule">
-      <div class="k lbl">About</div>
-      <div class="v"><p class="big">언하이드는 서울의 크리에이티브 스튜디오입니다. 아트 디렉션과 카피라이팅을 바탕으로 아이디어부터 완성된 결과물까지 직접 만듭니다.</p></div>
-    </div>
-    <div class="svc">
-      <div><b>Advertising</b><span>TVCF · 디지털 광고 기획과 제작</span></div>
-      <div><b>Character Design</b><span>브랜드 캐릭터와 IP 개발</span></div>
-      <div><b>Digital Imaging</b><span>키 비주얼과 이미지 리터칭</span></div>
-      <div><b>SNS Content</b><span>채널 운영과 콘텐츠 제작</span></div>
-    </div>
-  </div></section>
+<section class="pn apps" id="apps">
+  <a class="shot" href="apps/insta-comment-collector/"><img src="apps/insta-comment-collector/img/shot-basic.jpg" alt="인스타 댓글 수집기 화면"></a>
+  <div class="pcap"><div><span class="lbl">Apps by Unhide</span><h2>인스타 댓글 수집기</h2><p>Windows · 댓글 수집과 이벤트 추첨</p><a class="more" href="apps/insta-comment-collector/">자세히 보기 · 다운로드</a></div><span class="pn-n">06 / 08</span></div>
+</section>
 
-  <section class="sec" id="work"><div class="wrap">
-    <div class="row rule" style="margin-bottom:40px"><div class="k lbl">Work</div><div class="v lbl">Selected Projects</div></div>
-    <div class="grid">
-      <div class="ph work wide"><div class="im"><img src="assets/hero/hidie.jpg" alt="HIDIE TEASER"><video muted playsinline loop preload="none" data-src="assets/hero/hidie.mp4"></video></div><h3>HIDIE TEASER</h3><p>FILM · 10s</p></div>
-      <div class="ph work"><div class="im"><img src="assets/hero/starbucks.jpg" alt="Starbucks RTD"><video muted playsinline loop preload="none" data-src="assets/hero/starbucks.mp4"></video></div><h3>Starbucks RTD</h3><p>TVC · 30s</p></div>
-      <div class="ph work"><div class="im"><img src="assets/hero/callaway-60.jpg" alt="Callaway TourBan"><video muted playsinline loop preload="none" data-src="assets/hero/callaway-60.mp4"></video></div><h3>Callaway TourBan</h3><p>TVC · 60s</p></div>
-      <div class="ph work"><div class="im"><img src="assets/hero/dole.jpg" alt="Dole Banana"><video muted playsinline loop preload="none" data-src="assets/hero/dole.mp4"></video></div><h3>Dole Banana</h3><p>TVC · 15s</p></div>
-      <div class="ph work"><div class="im"><img src="assets/hero/callaway-20.jpg" alt="Callaway PARADYME TEASER"><video muted playsinline loop preload="none" data-src="assets/hero/callaway-20.mp4"></video></div><h3>Callaway PARADYME TEASER</h3><p>TVC · 15s</p></div>
-    </div>
-  </div></section>
+<section class="pn about" id="about">
+  <div class="in-wrap"><span class="lbl">About</span>
+    <p class="big">언하이드는 서울의 크리에이티브 스튜디오입니다.<br>아트 디렉션과 카피라이팅을 바탕으로, 아이디어부터 완성된 결과물까지 직접 만듭니다.</p></div>
+  <div class="svc">
+    <div><b>Advertising</b><span>TVCF · 디지털 광고 기획과 제작</span></div>
+    <div><b>Character Design</b><span>브랜드 캐릭터와 IP 개발</span></div>
+    <div><b>Digital Imaging</b><span>키 비주얼과 이미지 리터칭</span></div>
+    <div><b>SNS Content</b><span>채널 운영과 콘텐츠 제작</span></div>
+  </div>
+</section>
 
-  <section class="sec" id="apps"><div class="wrap">
-    <div class="row rule" style="margin-bottom:40px"><div class="k lbl">Apps</div><div class="v lbl">Tools by Unhide</div></div>
-    <div class="grid">
-      <a href="apps/insta-comment-collector/"><div class="im app"><img src="apps/insta-comment-collector/img/shot-basic.jpg" alt="인스타 댓글 수집기"></div><h3>인스타 댓글 수집기</h3><p>Windows · 댓글 수집과 이벤트 추첨 · 다운로드 →</p></a>
-      <div class="ph"><div class="im empty">Coming soon</div><h3 style="color:#555">Next App</h3><p>준비 중</p></div>
-    </div>
-  </div></section>
-
-  <section class="sec contact" id="contact"><div class="wrap">
-    <div class="row rule">
-      <div class="k lbl">Contact</div>
-      <div class="v"><a class="mail" href="mailto:phyudesign@unhide.co.kr">phyudesign@unhide.co.kr</a><p>프로젝트 문의, 협업 제안, 앱 사용 문의 모두 메일로 보내주세요.</p></div>
-    </div>
-  </div></section>
-
-  <footer class="ft"><div class="wrap"><span><img src="assets/logo/unhide-light.png" alt="UNHIDE" style="height:22px;width:auto;margin-bottom:16px">© 2026 UNHIDE. All rights reserved.</span><span>Seoul, Korea</span></div></footer>
-</div>
+<section class="pn contact" id="contact">
+  <div class="in-wrap"><span class="lbl" style="color:var(--sub);margin-bottom:28px">Contact</span>
+    <p class="big">함께 만들 이야기가 있다면.</p>
+    <div><a class="mail" href="mailto:phyudesign@unhide.co.kr">phyudesign@unhide.co.kr</a></div></div>
+  <footer class="ft"><img src="assets/logo/unhide-light.png" alt="UNHIDE"><span>© 2026 UNHIDE · Seoul, Korea</span></footer>
+</section>
 
 <script>
 // 첫 화면 슬라이드: 영상(.mp4) 또는 이미지. 영상은 항상 소리 없이, 끝까지 재생된 뒤 다음으로 넘어갑니다.
@@ -217,12 +226,21 @@ bar.addEventListener('click', (e) => {
   const v = els[i].querySelector('video'); if (!v || !v.duration) return;
   const r = bar.getBoundingClientRect(); v.currentTime = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)) * v.duration;
 });
-// Work: 마우스를 올리면 소리 없이 미리보기 재생
-document.querySelectorAll('.work').forEach((w) => {
-  const v = w.querySelector('video');
-  w.addEventListener('mouseenter', () => { if (!v.src) v.src = v.dataset.src; v.muted = true; v.play().catch(() => {}); });
-  w.addEventListener('mouseleave', () => v.pause());
-});
+
+// 작업 화면: 화면에 들어오면 소리 없이 재생, 벗어나면 정지
+const io = new IntersectionObserver((ents) => ents.forEach((en) => {
+  const pn = en.target, v = pn.querySelector('.media video');
+  if (en.isIntersecting) {
+    pn.classList.add('in');
+    if (v) { if (!v.src) v.src = v.dataset.src; v.muted = true; v.play().then(() => v.classList.add('on')).catch(() => {}); }
+  } else { pn.classList.remove('in'); if (v) v.pause(); }
+}), { threshold: .55 });
+document.querySelectorAll('.pn:not(.hero)').forEach((p) => io.observe(p));
+// 첫 화면을 벗어나면 쇼릴 정지, 돌아오면 다시 재생
+new IntersectionObserver(([en]) => {
+  const v = els[i] && els[i].querySelector('video'); if (!v) return;
+  en.isIntersecting ? v.play().catch(() => {}) : v.pause();
+}, { threshold: .3 }).observe(document.getElementById('top'));
 </script>
 </body>
 </html>
