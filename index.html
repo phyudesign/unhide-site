@@ -98,7 +98,7 @@ body{background:#0c0c0c;color:#f2f2f2}
 
 <header class="top">
   <a class="logo" href="#top"><img src="assets/logo/unhide-light.png" alt="UNHIDE 언하이드"></a>
-  <nav><a href="#latest-1">Latest</a><a href="work/">Work</a><a href="work/?c=apps">Apps</a><a href="#menu">Contact</a></nav>
+  <nav><a href="work/">Work</a><a href="about/">About</a><a href="work/?c=apps">Apps</a><a href="contact/">Contact</a></nav>
 </header>
 
 <!-- 01 첫 화면 쇼릴 — 아래 SLIDES 목록에서 관리 -->
@@ -130,7 +130,7 @@ body{background:#0c0c0c;color:#f2f2f2}
   </footer>
 </section>
 
-<script src="assets/works.js"></script>
+<script src="assets/works.js?v=20261019b"></script>
 <script>
 // 첫 화면 슬라이드: 영상(.mp4) 또는 이미지. 영상은 항상 소리 없이, 끝까지 재생된 뒤 다음으로 넘어갑니다.
 const SLIDES = [
@@ -212,9 +212,7 @@ bar.addEventListener('click', (e) => {
 });
 
 // 최신 작업 3개
-const TOTAL = 3;
-const LATEST_ITEMS = LATEST.map((key) => { const f = findWork(key); if (!f) return null; const w = f.work, e = f.ep;
-  return { key, cat: w.cat, title: e ? `${w.title} — ${e.title}` : w.title, meta: e ? e.meta : w.meta, desc: w.desc }; }).filter(Boolean);
+const LATEST_ITEMS = LATEST.map((l) => { const w = findWork(l.work); return w ? { ...l, cat: w.cat, desc: w.desc } : null; }).filter(Boolean);
 document.getElementById('latest').innerHTML = LATEST_ITEMS.map((w, k) => `
 <section class="pn work"${k === 0 ? ' id="latest-1"' : ''}>
   <div class="split">
@@ -222,11 +220,11 @@ document.getElementById('latest').innerHTML = LATEST_ITEMS.map((w, k) => `
       <span class="lbl">Latest Work — ${(CATEGORIES.find((c) => c.id === w.cat) || {}).name || ''}</span>
       <h2>${w.title}</h2><p class="meta">${w.meta}</p>
       ${w.desc ? `<p class="desc">${w.desc}</p>` : ''}
-      <a class="more" href="work/?open=${w.key}">See More</a>
+      <a class="more" href="work/?open=${w.work}&at=${w.at || 0}">See More</a>
     </div>
-    <div class="media"><img src="assets/hero/${w.key}.jpg" alt=""><video muted playsinline loop preload="none" data-src="assets/hero/${w.key}.mp4"></video></div>
+    <div class="media"><img src="${w.poster || w.image}" alt="">${w.video ? `<video muted playsinline loop preload="none" data-src="${w.video}"></video>` : ''}</div>
   </div>
-  <span class="pn-n">${String(k + 1).padStart(2, '0')} / ${String(TOTAL).padStart(2, '0')}</span>
+  <span class="pn-n">${String(k + 1).padStart(2, '0')} / ${String(LATEST_ITEMS.length).padStart(2, '0')}</span>
 </section>`).join('');
 // 카테고리 메뉴
 document.getElementById('cats').innerHTML = CATEGORIES.map((c) => {

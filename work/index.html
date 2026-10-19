@@ -3,143 +3,188 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Work — UNHIDE</title>
-<meta name="description" content="언하이드 작업 — 광고, 캐릭터, 디지털 이미징, SNS 콘텐츠, 앱.">
+<title>Work — unhide</title>
+<meta name="description" content="언하이드 작업 — TVCF, 캐릭터 크리에이션, SNS 콘텐츠, 비주얼 디자인, 앱.">
 <link rel="icon" href="../assets/logo/favicon.png">
 <link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/dark.css?v=1">
 <style>
-body{background:#0c0c0c;color:#f2f2f2}
-:root{--sub:#8b8b8b}
-.top{position:fixed;inset:0 0 auto;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:28px var(--pad);background:linear-gradient(180deg,rgba(12,12,12,.95),rgba(12,12,12,0))}
-.top .logo img{height:34px;width:auto}
-.top nav{display:flex;gap:26px;font-size:14px}
-.top nav a{color:rgba(255,255,255,.7);transition:color .2s}.top nav a:hover,.top nav a.on{color:#fff}
-.head{padding:170px var(--pad) 0}
-.head .lbl{color:var(--sub)}
-.head h1{font-size:clamp(40px,6vw,92px);font-weight:500;letter-spacing:-.04em;line-height:1;margin:14px 0 40px}
 .tabs{display:flex;flex-wrap:wrap;gap:8px;padding:0 var(--pad);margin-bottom:48px}
 .tabs a{font-size:13px;padding:8px 16px;border:1px solid #2c2c2c;border-radius:999px;color:#a5a5a5;transition:all .2s}
 .tabs a:hover{color:#fff;border-color:#555}
 .tabs a.on{background:#f2f2f2;color:#111;border-color:#f2f2f2}
 .tabs a span{opacity:.55;margin-left:6px;font-variant-numeric:tabular-nums}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:56px 24px;padding:0 var(--pad) 140px}
+.item{cursor:pointer;display:block}
 .item .im{position:relative;aspect-ratio:16/9;overflow:hidden;background:#1a1a1a}
 .item .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
-/* 썸네일: 검정 50% 매트 + 가운데 재생 아이콘 */
+/* 썸네일: 검정 50% 매트 + 가운데 아이콘 */
 .item .im:not(.app)::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.5);transition:background-color .35s}
-.item .im .play{position:absolute;left:50%;top:50%;z-index:2;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;border:1.5px solid rgba(255,255,255,.85);display:grid;place-items:center;transition:transform .35s,background-color .35s}
-.item .im .play svg{width:20px;height:20px;margin-left:3px;fill:#fff}
+.item .ic{position:absolute;left:50%;top:50%;z-index:2;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;border:1.5px solid rgba(255,255,255,.85);display:grid;place-items:center;transition:transform .35s,background-color .35s}
+.item .ic svg{width:20px;height:20px;fill:#fff}
+.item .ic.pl svg{margin-left:3px}
+.item .ic.vw svg{fill:none;stroke:#fff;stroke-width:1.6}
 .item:hover .im img{transform:scale(1.03)}
 .item:hover .im::after{background:rgba(0,0,0,.35)}
-.item:hover .im .play{transform:scale(1.08);background:rgba(255,255,255,.12)}
-.item{cursor:pointer}
-.item .badge{position:absolute;right:14px;top:14px;z-index:2;font-size:11px;letter-spacing:.04em;color:#fff;padding:5px 10px;border:1px solid rgba(255,255,255,.6);border-radius:999px;background:rgba(0,0,0,.25)}
+.item:hover .ic{transform:scale(1.08);background:rgba(255,255,255,.12)}
+.item .badge{position:absolute;right:14px;top:14px;z-index:2;font-size:11px;letter-spacing:.02em;color:#fff;padding:5px 10px;border:1px solid rgba(255,255,255,.55);border-radius:999px;background:rgba(0,0,0,.25)}
 .item .im.app{background:#e9e9e7;display:flex;align-items:center;justify-content:center}
 .item .im.app img{position:static;width:76%;height:auto;border-radius:8px;box-shadow:0 24px 60px rgba(0,0,0,.25)}
 .item h3{font-size:17px;font-weight:500;margin-top:16px;letter-spacing:-.01em}
 .item p{font-size:13px;color:var(--sub);margin-top:4px}
-/* 작품 팝업 플레이어 */
-.pop{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:40px;background:rgba(0,0,0,.86);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-.pop.on{display:flex;animation:pf .3s ease}
+.empty{grid-column:1/-1;border-top:1px solid #262626;padding-top:28px;color:var(--sub);font-size:14px}
+
+/* ── 작품 팝업 (영상·이미지 넘겨보기) ── */
+.pop{position:fixed;inset:0;z-index:60;display:none;background:rgba(6,6,6,.94);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.pop.on{display:grid;grid-template-columns:minmax(0,1fr) 380px;animation:pf .3s ease}
 @keyframes pf{from{opacity:0}}
-.pop .box{width:min(1200px,100%,calc((100vh - 220px)*16/9));animation:pu .45s cubic-bezier(.2,.7,.2,1)}
-@keyframes pu{from{transform:translateY(18px);opacity:0}}
-.pop video{display:block;width:100%;aspect-ratio:16/9;background:#000}
-.pop .info{display:flex;justify-content:space-between;gap:24px;padding-top:20px}
-.pop .info .lbl{color:var(--sub);font-size:12px}
-.pop .info h2{font-size:clamp(20px,2.2vw,30px);font-weight:500;letter-spacing:-.03em;margin:6px 0 4px}
-.pop .info .meta{font-size:13px;color:var(--sub)}
-.pop .info .desc{font-size:14px;line-height:1.7;color:#bdbdbd;margin-top:12px;max-width:640px}
-.pop .x{all:unset;cursor:pointer;position:absolute;right:22px;top:18px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#ddd}
+.stage{position:relative;display:flex;align-items:center;justify-content:center;padding:64px 84px 72px;min-height:0;touch-action:pan-y}
+.stage video,.stage img{display:block;max-width:100%;max-height:calc(100vh - 136px);background:#000;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.stage video.wide{width:min(100%,calc((100vh - 136px)*16/9));aspect-ratio:16/9}
+.stage video.tall{height:calc(100vh - 136px);aspect-ratio:9/16;width:auto}
+.stage .cap{position:absolute;left:84px;right:84px;bottom:24px;display:flex;justify-content:space-between;font-size:13px;color:#9a9a9a}
+.stage .cap b{color:#eee;font-weight:500;margin-right:10px}
+.stage .nv{all:unset;cursor:pointer;position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;border-radius:50%;display:grid;place-items:center;color:#ddd;transition:background-color .2s}
+.stage .nv:hover{background:rgba(255,255,255,.1);color:#fff}
+.stage .nv svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.5;fill:none}
+.stage .pv{left:18px}.stage .nx{right:18px}
+.side{border-left:1px solid #1f1f1f;padding:72px 28px 40px;overflow-y:auto}
+.side .lbl{color:var(--sub);font-size:12px}
+.side h2{font-size:28px;font-weight:500;letter-spacing:-.03em;margin:8px 0 6px;line-height:1.2}
+.side .meta{font-size:13px;color:var(--sub)}
+.side .desc{font-size:14px;line-height:1.75;color:#bdbdbd;margin:20px 0 22px}
+.side h4{font-size:11px;letter-spacing:.08em;color:#6f6f6f;font-weight:500;margin:18px 0 10px;text-transform:uppercase}
+.side .grp{margin-top:26px;border-top:1px solid #1f1f1f;padding-top:16px}
+.side .th{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.side .th button{all:unset;cursor:pointer;position:relative;aspect-ratio:1;overflow:hidden;background:#1a1a1a;outline:1px solid transparent;transition:outline-color .2s,opacity .2s;opacity:.6}
+.side .th button:hover{opacity:1}
+.side .th button.on{outline:2px solid #fff;outline-offset:2px;opacity:1}
+.side .th img{width:100%;height:100%;object-fit:cover}
+.side .th i{position:absolute;right:4px;bottom:4px;width:16px;height:16px;border-radius:50%;background:rgba(0,0,0,.6);display:grid;place-items:center}
+.side .th i svg{width:8px;height:8px;fill:#fff;margin-left:1px}
+.pop .x{all:unset;cursor:pointer;position:absolute;right:16px;top:14px;z-index:3;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#ddd}
 .pop .x:hover{background:rgba(255,255,255,.1);color:#fff}
 .pop .x svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.5;fill:none}
-.pop .eps{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-.pop .eps button{all:unset;cursor:pointer;font-size:13px;padding:8px 14px;border:1px solid #333;border-radius:999px;color:#aaa;transition:all .2s}
-.pop .eps button:hover{color:#fff;border-color:#777}
-.pop .eps button.on{background:#f2f2f2;color:#111;border-color:#f2f2f2}
-.pop .eps button i{font-style:normal;opacity:.55;margin-right:6px;font-variant-numeric:tabular-nums}
-@media (max-width:900px){.pop{padding:64px 0 24px;align-items:flex-start}.pop .box{width:100%;margin-top:8vh}.pop .info{padding:18px 20px 0}.pop .x{right:10px;top:10px}}
-.empty{grid-column:1/-1;border-top:1px solid #262626;padding-top:28px;color:var(--sub);font-size:14px}
-.ft{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:0 var(--pad) 30px;font-size:12px;color:#5f5f5f}
-.ft .mail{color:#7a7a7a}.ft .mail:hover{color:#bdbdbd}
-@media (max-width:900px){.grid{grid-template-columns:1fr}.top nav{gap:16px;font-size:13px}.top .logo img{height:26px}.head{padding-top:120px}}
+@media (max-width:900px){
+  .grid{grid-template-columns:1fr}
+  .pop.on{display:block;overflow-y:auto}
+  .stage{padding:60px 0 44px;min-height:62vh}
+  .stage video,.stage img{max-height:70vh}
+  .stage video.wide{width:100%}
+  .stage video.tall{height:70vh}
+  .stage .nv{display:none}
+  .stage .cap{left:20px;right:20px;bottom:12px}
+  .side{border-left:0;border-top:1px solid #1f1f1f;padding:24px 20px 60px;overflow:visible}
+  .side .th{grid-template-columns:repeat(5,1fr)}
+}
 </style>
 </head>
 <body>
 <header class="top">
-  <a class="logo" href="../"><img src="../assets/logo/unhide-light.png" alt="UNHIDE 언하이드"></a>
-  <nav><a href="../#latest-1">Latest</a><a href="./" id="nav-work">Work</a><a href="./?c=apps" id="nav-apps">Apps</a><a href="../#menu">Contact</a></nav>
+  <a class="logo" href="../"><img src="../assets/logo/unhide-light.png" alt="unhide 언하이드"></a>
+  <nav><a href="./" id="nav-work">Work</a><a href="../about/">About</a><a href="./?c=apps" id="nav-apps">Apps</a><a href="../contact/">Contact</a></nav>
 </header>
 
 <div class="head"><span class="lbl">Work</span><h1 id="title">All Projects</h1></div>
 <nav class="tabs" id="tabs"></nav>
 <main class="grid" id="grid"></main>
-<footer class="ft"><span>© 2026 unhide. All rights reserved.</span><a class="mail" href="mailto:phyudesign@unhide.co.kr">phyudesign@unhide.co.kr</a></footer>
+<footer class="ft"><p class="motto">We — Find what matters. Share what stirs hearts. Make life beautifully visible — unhide</p><span>© 2026 unhide. All rights reserved.</span><a class="mail" href="mailto:phyudesign@unhide.co.kr">phyudesign@unhide.co.kr</a></footer>
 
 <div class="pop" id="pop" role="dialog" aria-modal="true" aria-label="작품 보기">
   <button type="button" class="x" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
-  <div class="box"><video controls playsinline preload="none"></video>
-    <div class="info"><div><span class="lbl" id="p-cat"></span><h2 id="p-title"></h2><p class="meta" id="p-meta"></p><p class="desc" id="p-desc"></p><div class="eps" id="p-eps"></div></div></div></div>
+  <div class="stage" id="stage">
+    <button type="button" class="nv pv" aria-label="이전"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button>
+    <div id="slot"></div>
+    <button type="button" class="nv nx" aria-label="다음"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></button>
+    <div class="cap"><span id="s-cap"></span><span id="s-n"></span></div>
+  </div>
+  <aside class="side" id="side"></aside>
 </div>
 
-<script src="../assets/works.js"></script>
+<script src="../assets/works.js?v=20261019b"></script>
 <script>
-const c = new URLSearchParams(location.search).get('c') || 'all';
+const R = (p) => '../' + p;
+const PLAY = '<svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>';
+const VIEW = '<svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+const catName = (id) => (CATEGORIES.find((x) => x.id === id) || {}).name || '';
+const q = new URLSearchParams(location.search);
+const c = q.get('c') || 'all';
 const cat = CATEGORIES.find((x) => x.id === c);
 document.getElementById('title').textContent = cat ? cat.name : 'All Projects';
 document.getElementById(c === 'apps' ? 'nav-apps' : 'nav-work').classList.add('on');
 const count = (id) => id === 'apps' ? APPS.length : id === 'all' ? WORKS.length : WORKS.filter((w) => w.cat === id).length;
 document.getElementById('tabs').innerHTML = [{ id: 'all', name: 'All' }, ...CATEGORIES].map((x) =>
   `<a href="${x.id === 'all' ? './' : './?c=' + x.id}" class="${x.id === c ? 'on' : ''}">${x.name}<span>${count(x.id)}</span></a>`).join('');
+
 const grid = document.getElementById('grid');
 if (c === 'apps') {
   grid.innerHTML = APPS.map((a) => `<a class="item" href="../${a.href}"><div class="im app"><img src="../${a.img}" alt=""></div><h3>${a.title}</h3><p>${a.meta} · 자세히 보기 →</p></a>`).join('');
 } else {
   const list = c === 'all' ? WORKS : WORKS.filter((w) => w.cat === c);
-  grid.innerHTML = list.length ? list.map((w) => `<div class="item" data-key="${w.key}" role="button" tabindex="0" aria-label="${w.title} 재생"><div class="im"><img src="../assets/hero/${w.thumb || w.key}.jpg" alt="">${w.episodes ? `<span class="badge">Series · ${w.episodes.length}편</span>` : ''}<span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span></div><h3>${w.title}</h3><p>${w.meta}</p></div>`).join('')
-    : '<p class="empty">새 작업을 준비하고 있어요.</p>';
+  grid.innerHTML = list.length ? list.map((w) => {
+    const nv = w.media.filter((m) => m.type === 'video').length, ni = w.media.length - nv;
+    const badge = w.media.length > 1 ? [nv ? `영상 ${nv}` : '', ni ? `이미지 ${ni}` : ''].filter(Boolean).join(' · ') : '';
+    const isVid = w.media[0].type === 'video';
+    return `<div class="item" data-key="${w.key}" role="button" tabindex="0" aria-label="${w.title} 보기">
+      <div class="im"><img src="${R(w.thumb)}" alt="" loading="lazy">${badge ? `<span class="badge">${badge}</span>` : ''}<span class="ic ${isVid ? 'pl' : 'vw'}" aria-hidden="true">${isVid ? PLAY : VIEW}</span></div>
+      <h3>${w.title}</h3><p>${w.client} · ${w.meta}</p></div>`;
+  }).join('') : '<p class="empty">새 작업을 준비하고 있어요.</p>';
 }
-// 작품을 누르면 팝업 창에서 소리와 함께 재생
-const catName = (id) => (CATEGORIES.find((x) => x.id === id) || {}).name || '';
-const pop = document.getElementById('pop'), pv = pop.querySelector('video');
-let cur = null;
-function playEp(i) {
-  const w = cur, e = w.episodes ? w.episodes[i] : null, key = e ? e.key : w.key;
-  document.getElementById('p-title').textContent = e ? `${w.title} — ${e.title}` : w.title;
-  document.getElementById('p-meta').textContent = e ? e.meta : w.meta;
-  document.querySelectorAll('#p-eps button').forEach((b, k) => b.classList.toggle('on', k === i));
-  pv.poster = `../assets/hero/${key}.jpg`; pv.src = `../assets/work/${key}.mp4`;
-  pv.dataset.i = i; pv.muted = false; pv.volume = 1; pv.play().catch(() => {});
+
+// ── 팝업
+const pop = document.getElementById('pop'), slot = document.getElementById('slot'), side = document.getElementById('side');
+let cur = null, at = 0;
+function stopMedia() { const v = slot.querySelector('video'); if (v) { v.pause(); v.removeAttribute('src'); v.load(); } }
+function show(i) {
+  stopMedia();
+  at = (i + cur.media.length) % cur.media.length;
+  const m = cur.media[at];
+  if (m.type === 'video') {
+    slot.innerHTML = `<video class="${m.v ? 'tall' : 'wide'}" controls playsinline preload="auto" poster="${R(m.poster)}" src="${R(m.src)}"></video>`;
+    const v = slot.querySelector('video'); v.muted = false; v.volume = 1; v.play().catch(() => {});
+    v.addEventListener('ended', () => { if (at < cur.media.length - 1 && cur.media[at + 1].type === 'video') show(at + 1); });
+  } else slot.innerHTML = `<img src="${R(m.src)}" alt="${m.title || ''}">`;
+  document.getElementById('s-cap').innerHTML = `<b>${m.title || ''}</b>${m.meta || m.group || ''}`;
+  document.getElementById('s-n').textContent = cur.media.length > 1 ? `${at + 1} / ${cur.media.length}` : '';
+  side.querySelectorAll('.th button').forEach((b) => b.classList.toggle('on', +b.dataset.i === at));
+  pop.querySelectorAll('.nv').forEach((b) => (b.style.display = cur.media.length > 1 ? '' : 'none'));
 }
-function openWork(key) {
-  const f = findWork(key); if (!f) return;
-  cur = f.work;
-  document.getElementById('p-cat').textContent = catName(cur.cat) + (cur.episodes ? ` · Series` : '');
-  document.getElementById('p-desc').textContent = cur.desc || '';
-  const eps = document.getElementById('p-eps');
-  eps.innerHTML = (cur.episodes || []).map((e, k) => `<button type="button"><i>${String(k + 1).padStart(2, '0')}</i>${e.title}</button>`).join('');
-  eps.querySelectorAll('button').forEach((b, k) => (b.onclick = () => playEp(k)));
-  pop.classList.add('on'); document.body.style.overflow = 'hidden';
-  playEp(f.index);
-  pop.querySelector('.x').focus({ preventScroll: true });
+function openWork(key, i = 0) {
+  cur = findWork(key); if (!cur) return;
+  const groups = [];
+  cur.media.forEach((m, k) => { const g = m.group || 'Media'; let G = groups.find((x) => x.name === g); if (!G) groups.push(G = { name: g, items: [] }); G.items.push(k); });
+  side.innerHTML = `<span class="lbl">${cur.client} · ${catName(cur.cat)}</span><h2>${cur.title}</h2><p class="meta">${cur.meta}</p>
+    <p class="desc">${cur.desc || ''}</p>
+    ${cur.role ? `<h4>Role</h4>${cur.role.map((r) => `<span class="chip">${r}</span>`).join('')}` : ''}
+    ${cur.scope ? `<h4>Scope</h4>${cur.scope.map((r) => `<span class="chip">${r}</span>`).join('')}` : ''}
+    ${cur.tags ? `<h4>Keywords</h4>${cur.tags.map((r) => `<span class="chip">${r}</span>`).join('')}` : ''}
+    ${cur.media.length > 1 ? groups.map((G) => `<div class="grp"><h4>${G.name}</h4><div class="th">${G.items.map((k) => { const m = cur.media[k];
+      return `<button type="button" data-i="${k}" aria-label="${m.title || ''}"><img src="${R(m.type === 'video' ? m.poster : m.src)}" alt="" loading="lazy">${m.type === 'video' ? `<i>${PLAY}</i>` : ''}</button>`; }).join('')}</div></div>`).join('') : ''}`;
+  side.querySelectorAll('.th button').forEach((b) => (b.onclick = () => show(+b.dataset.i)));
+  pop.classList.add('on'); document.body.style.overflow = 'hidden'; pop.scrollTop = 0; side.scrollTop = 0;
+  show(i);
 }
-// 시리즈는 한 편이 끝나면 다음 편으로
-pv.addEventListener('ended', () => { if (cur && cur.episodes) { const n = +pv.dataset.i + 1; if (n < cur.episodes.length) playEp(n); } });
-function closeWork() {
-  if (!pop.classList.contains('on')) return;
-  pv.pause(); pv.removeAttribute('src'); pv.load();
-  pop.classList.remove('on'); document.body.style.overflow = '';
-}
+function closeWork() { if (!pop.classList.contains('on')) return; stopMedia(); slot.innerHTML = ''; pop.classList.remove('on'); document.body.style.overflow = ''; }
 grid.querySelectorAll('.item[data-key]').forEach((it) => {
   it.addEventListener('click', () => openWork(it.dataset.key));
   it.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openWork(it.dataset.key); } });
 });
 pop.querySelector('.x').addEventListener('click', closeWork);
-pop.addEventListener('click', (e) => { if (e.target === pop) closeWork(); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeWork(); });
-// 메인에서 'See More'로 들어오면 그 작품을 바로 열기 (?open=key)
-const openKey = new URLSearchParams(location.search).get('open');
-if (openKey && findWork(openKey)) openWork(openKey);
+pop.querySelector('.pv').addEventListener('click', () => show(at - 1));
+pop.querySelector('.nx').addEventListener('click', () => show(at + 1));
+document.getElementById('stage').addEventListener('click', (e) => { if (e.target.id === 'stage' && window.innerWidth > 900) closeWork(); });
+document.addEventListener('keydown', (e) => {
+  if (!pop.classList.contains('on')) return;
+  if (e.key === 'Escape') closeWork(); else if (e.key === 'ArrowLeft') show(at - 1); else if (e.key === 'ArrowRight') show(at + 1);
+});
+// 스와이프로 넘기기 (모바일)
+(() => { const st = document.getElementById('stage'); let sx = 0, sy = 0;
+  st.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+  st.addEventListener('touchend', (e) => { const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+    if (cur && cur.media.length > 1 && Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.3) show(at + (dx < 0 ? 1 : -1)); }, { passive: true });
+})();
+// 메인에서 'See More'로 들어오면 바로 열기 (?open=프로젝트&at=번호)
+if (q.get('open') && findWork(q.get('open'))) openWork(q.get('open'), +(q.get('at') || 0));
 </script>
 </body>
 </html>
