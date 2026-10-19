@@ -3,7 +3,7 @@ body{background:#0c0c0c;color:#f2f2f2}
 :root{--sub:#8b8b8b;--line:#262626}
 .top{position:fixed;inset:0 0 auto;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:28px var(--pad);background:linear-gradient(180deg,rgba(12,12,12,.95),rgba(12,12,12,0))}
 .top .logo img{height:34px;width:auto}
-.top nav{display:flex;gap:26px;font-size:14px}
+.top nav{display:flex;gap:32px;font-size:17px}
 .top nav a{color:rgba(255,255,255,.65);transition:color .2s}.top nav a:hover,.top nav a.on{color:#fff}
 .head{padding:170px var(--pad) 0}
 .head .lbl{color:var(--sub)}
@@ -12,4 +12,4 @@ body{background:#0c0c0c;color:#f2f2f2}
 .ft .motto{width:100%;font-size:13px;color:#8e8e8e;margin-bottom:6px}
 .ft .mail{color:#7a7a7a}.ft .mail:hover{color:#bdbdbd}
 .chip{display:inline-block;font-size:12px;padding:6px 12px;border:1px solid #2f2f2f;border-radius:999px;color:#a9a9a9;margin:0 6px 8px 0}
-@media (max-width:900px){.top nav{gap:16px;font-size:13px}.top .logo img{height:26px}.head{padding-top:120px}}
+@media (max-width:900px){.top nav{gap:16px;font-size:14px}.top .logo img{height:26px}.head{padding-top:120px}}
