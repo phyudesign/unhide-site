@@ -58,7 +58,7 @@
 <body>
 <header class="hd"><div class="wrap">
   <a class="logo" href="../../"><img src="../../assets/logo/unhide-black.png" alt="UNHIDE 언하이드"></a>
-  <nav class="nav"><a href="../../work/">Work</a><a href="../../about/">About</a><a href="../../work/?c=apps" class="on">Apps</a><a href="../../contact/">Contact</a></nav>
+  <nav class="nav"><a href="../../work/">Work</a><a href="../../work/?c=apps" class="on">Apps</a><a href="../../about/">About</a><a href="../../contact/">Contact</a></nav>
 </div></header>
 
 <main>
@@ -166,8 +166,6 @@ hook('insta-comment-collector-mac', 'dl-mac', 'v-mac');
 hook('insta-comment-collector-mac-intel', 'dl-mac-intel');
 // 맥에서 접속하면 Mac 버튼과 Mac 설치 방법을 먼저
 const isMac = /Mac/i.test(navigator.platform || navigator.userAgent);
-if (isMac) { const d = document.querySelector('.dl'); d.insertBefore(document.getElementById('dl-mac'), d.firstChild); document.getElementById('dl-win').classList.replace('btn-p', 'btn-g'); }
-else document.getElementById('dl-mac').classList.replace('btn-p', 'btn-g');
 function showOS(os) {
   document.querySelectorAll('.ostab button').forEach((b) => b.classList.toggle('on', b.dataset.os === os));
   document.querySelectorAll('[data-pane]').forEach((p) => (p.hidden = p.dataset.pane !== os));
