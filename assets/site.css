@@ -18,7 +18,7 @@ h1,h2,h3,p{margin:0}
 .logo{font-weight:800;font-size:15px;letter-spacing:.14em}
 .logo i{font-style:normal;color:var(--accent)}
 .logo img{height:24px;width:auto;display:block}
-.nav{display:flex;gap:32px;font-size:17px}
+.nav{display:flex;gap:28px;font-size:14px}
 .nav a{color:var(--sub);transition:color .2s}.nav a:hover,.nav a.on{color:var(--ink)}
 main{padding-top:64px}
 
@@ -56,6 +56,6 @@ a:hover .cover img{transform:scale(1.025)}
   :root{--pad:20px}
   .row{display:block}.row>.k{margin-bottom:14px}
   .sec{padding:80px 0}
-  .nav{gap:16px;font-size:14px}
+  .nav{gap:18px;font-size:13px}
   .cover{aspect-ratio:4/3}.cover img{width:86%}
 }
