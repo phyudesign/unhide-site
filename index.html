@@ -55,6 +55,7 @@ body{background:#0c0c0c}
 .grid .im.app{background:#e9e9e7}.grid .im.app img{width:76%;height:auto;object-fit:contain;border-radius:8px;box-shadow:0 24px 60px rgba(0,0,0,.25)}
 .grid .im.empty{border:1px dashed #333;background:transparent;color:#555;font-size:13px}
 .grid .work .im{position:relative}.grid .work video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s}.grid .work:hover video{opacity:1}
+.grid .wide{grid-column:1/-1}
 .grid h3{font-size:17px;font-weight:600;margin-top:16px;letter-spacing:-.01em}
 .grid p{font-size:13px;color:var(--sub);margin-top:4px}
 .contact{padding-bottom:150px!important}
@@ -110,10 +111,11 @@ body{background:#0c0c0c}
   <section class="sec" id="work"><div class="wrap">
     <div class="row rule" style="margin-bottom:40px"><div class="k lbl">Work</div><div class="v lbl">Selected Projects</div></div>
     <div class="grid">
+      <div class="ph work wide"><div class="im"><img src="assets/hero/hidie.jpg" alt="HIDIE TEASER"><video muted playsinline loop preload="none" data-src="assets/hero/hidie.mp4"></video></div><h3>HIDIE TEASER</h3><p>FILM · 10s</p></div>
       <div class="ph work"><div class="im"><img src="assets/hero/starbucks.jpg" alt="Starbucks RTD"><video muted playsinline loop preload="none" data-src="assets/hero/starbucks.mp4"></video></div><h3>Starbucks RTD</h3><p>TVC · 30s</p></div>
-      <div class="ph work"><div class="im"><img src="assets/hero/callaway-60.jpg" alt="Callaway"><video muted playsinline loop preload="none" data-src="assets/hero/callaway-60.mp4"></video></div><h3>Callaway</h3><p>TVC · 60s</p></div>
-      <div class="ph work"><div class="im"><img src="assets/hero/dole.jpg" alt="Dole"><video muted playsinline loop preload="none" data-src="assets/hero/dole.mp4"></video></div><h3>Dole</h3><p>Film</p></div>
-      <div class="ph work"><div class="im"><img src="assets/hero/callaway-20.jpg" alt="Callaway"><video muted playsinline loop preload="none" data-src="assets/hero/callaway-20.mp4"></video></div><h3>Callaway</h3><p>TVC · 20s</p></div>
+      <div class="ph work"><div class="im"><img src="assets/hero/callaway-60.jpg" alt="Callaway TourBan"><video muted playsinline loop preload="none" data-src="assets/hero/callaway-60.mp4"></video></div><h3>Callaway TourBan</h3><p>TVC · 60s</p></div>
+      <div class="ph work"><div class="im"><img src="assets/hero/dole.jpg" alt="Dole Banana"><video muted playsinline loop preload="none" data-src="assets/hero/dole.mp4"></video></div><h3>Dole Banana</h3><p>TVC · 15s</p></div>
+      <div class="ph work"><div class="im"><img src="assets/hero/callaway-20.jpg" alt="Callaway PARADYME TEASER"><video muted playsinline loop preload="none" data-src="assets/hero/callaway-20.mp4"></video></div><h3>Callaway PARADYME TEASER</h3><p>TVC · 15s</p></div>
     </div>
   </div></section>
 
@@ -138,11 +140,19 @@ body{background:#0c0c0c}
 <script>
 // 첫 화면 슬라이드: 영상(.mp4) 또는 이미지. 영상은 항상 소리 없이, 끝까지 재생된 뒤 다음으로 넘어갑니다.
 const SLIDES = [
-  { src: "assets/hero/starbucks.mp4",   poster: "assets/hero/starbucks.jpg",   title: "Starbucks RTD",  meta: "TVC · 30s" },
-  { src: "assets/hero/callaway-60.mp4", poster: "assets/hero/callaway-60.jpg", title: "Callaway",       meta: "TVC · 60s" },
-  { src: "assets/hero/dole.mp4",        poster: "assets/hero/dole.jpg",        title: "Dole",           meta: "Film" },
-  { src: "assets/hero/callaway-20.mp4", poster: "assets/hero/callaway-20.jpg", title: "Callaway",       meta: "TVC · 20s" },
+  { src: "assets/hero/starbucks.mp4",   poster: "assets/hero/starbucks.jpg",   title: "Starbucks RTD",             meta: "TVC · 30s" },
+  { src: "assets/hero/callaway-60.mp4", poster: "assets/hero/callaway-60.jpg", title: "Callaway TourBan",          meta: "TVC · 60s" },
+  { src: "assets/hero/dole.mp4",        poster: "assets/hero/dole.jpg",        title: "Dole Banana",               meta: "TVC · 15s" },
+  { src: "assets/hero/callaway-20.mp4", poster: "assets/hero/callaway-20.jpg", title: "Callaway PARADYME TEASER",  meta: "TVC · 15s" },
+  { src: "assets/hero/hidie.mp4",       poster: "assets/hero/hidie.jpg",       title: "HIDIE TEASER",              meta: "FILM · 10s" },
 ];
+// 접속할 때마다 순서를 무작위로 섞고, 지난 방문 때 첫 화면이었던 영상은 첫 순서에서 피함
+for (let k = SLIDES.length - 1; k > 0; k--) { const r = Math.floor(Math.random() * (k + 1)); [SLIDES[k], SLIDES[r]] = [SLIDES[r], SLIDES[k]]; }
+try {
+  const last = localStorage.getItem('unhide_hero_first');
+  if (SLIDES.length > 1 && SLIDES[0].src === last) SLIDES.push(SLIDES.shift());
+  localStorage.setItem('unhide_hero_first', SLIDES[0].src);
+} catch (e) { /* 저장 불가 환경이면 그냥 무작위 */ }
 const IMAGE_SECONDS = 6;
 const box = document.getElementById('slides'), capT = document.getElementById('cap-t'), capN = document.getElementById('cap-n');
 const isVid = (s) => /\.mp4$/i.test(s.src);
