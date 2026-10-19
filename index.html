@@ -24,10 +24,10 @@ body{background:#0c0c0c;color:#f2f2f2}
 /* ── 첫 화면 쇼릴 ── */
 .hero{background:#000;touch-action:pan-y}
 /* 창업(2025.04) 이후 흐르는 시간 — 화면을 거의 채우는 반투명 흰 숫자 */
-@font-face{font-family:"Anton";src:url("assets/fonts/anton-digits.woff") format("woff");font-display:block}
-.clock{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden}
-.clock b{font-family:"Anton",Impact,"Arial Narrow",sans-serif;font-weight:400;font-size:100px;line-height:.86;letter-spacing:-.01em;
-  color:rgba(255,255,255,.26);font-variant-numeric:tabular-nums;white-space:nowrap;display:block}
+/* 창업(2025.04) 이후 흐르는 시간 — 상단 가운데, 메뉴와 같은 크기 */
+.clock{position:absolute;left:50%;top:28px;z-index:5;transform:translateX(-50%);height:34px;display:flex;align-items:center;pointer-events:none}
+.clock b{font-weight:400;font-size:14px;letter-spacing:.14em;color:rgba(255,255,255,.82);font-variant-numeric:tabular-nums;white-space:nowrap}
+@media (max-width:900px){.clock{top:74px;height:24px}.clock b{font-size:12px}}
 .hero .slide{position:absolute;inset:0;opacity:0;transition:opacity 1.4s ease}
 .hero .slide.on{opacity:1}
 .hero .slide img,.hero .slide video{width:100%;height:100%;object-fit:cover;opacity:.5;transform:scale(1.06);transition:transform 7s linear}
@@ -217,29 +217,15 @@ bar.addEventListener('click', (e) => {
   const r = bar.getBoundingClientRect(); v.currentTime = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)) * v.duration;
 });
 
-// 창업 이후 시간 (2025년 4월 1일 0시, 한국 시간 기준) — 화면을 꽉 채우도록 글자 크기 자동 맞춤
+// 창업 이후 시간 (2025년 4월 1일 0시, 한국 시간 기준)
 (() => {
   const START = Date.parse('2025-04-01T00:00:00+09:00'), el = document.getElementById('since');
   const p2 = (n) => String(n).padStart(2, '0');
-  let len = 0;
-  const fit = () => {
-    el.style.fontSize = '100px'; el.style.transform = '';
-    const w = el.scrollWidth, h = el.offsetHeight, hero = el.parentNode;
-    const k = Math.min(hero.clientWidth * 0.96 / w, hero.clientHeight * 0.92 / h);
-    el.style.fontSize = (100 * k).toFixed(1) + 'px';
-    // 세로로 길게 늘려 화면을 채우는 느낌 (최대 2.4배)
-    const ky = Math.max(1, Math.min(2.4, hero.clientHeight * 0.84 / el.offsetHeight));
-    el.style.transform = `scaleY(${ky.toFixed(3)})`;
-  };
   const tick = () => {
     const t = Math.max(0, Math.floor((Date.now() - START) / 1000));
-    const txt = `${Math.floor(t / 3600)}:${p2(Math.floor(t / 60) % 60)}:${p2(t % 60)}`;
-    el.textContent = txt;
-    if (txt.length !== len) { len = txt.length; fit(); }
+    el.textContent = `${Math.floor(t / 3600)}:${p2(Math.floor(t / 60) % 60)}:${p2(t % 60)}`;
   };
   tick(); setInterval(tick, 1000);
-  addEventListener('resize', fit);
-  if (document.fonts) document.fonts.ready.then(fit);
 })();
 // 최신 작업 3개
 const LATEST_ITEMS = LATEST.map((l) => { const w = findWork(l.work); return w ? { ...l, cat: w.cat, desc: w.desc } : null; }).filter(Boolean);
