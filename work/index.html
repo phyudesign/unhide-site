@@ -33,6 +33,22 @@ body{background:#0c0c0c;color:#f2f2f2}
 .item .im.app img{position:static;width:76%;height:auto;border-radius:8px;box-shadow:0 24px 60px rgba(0,0,0,.25)}
 .item h3{font-size:17px;font-weight:500;margin-top:16px;letter-spacing:-.01em}
 .item p{font-size:13px;color:var(--sub);margin-top:4px}
+/* 작품 플레이어 (클릭한 작품 줄 아래에 펼쳐짐) */
+.item{cursor:pointer}
+.item.sel h3{text-decoration:underline;text-underline-offset:4px}
+.player{scroll-margin-top:96px;grid-column:1/-1;display:grid;grid-template-columns:repeat(12,1fr);column-gap:24px;padding:8px 0 40px;border-bottom:1px solid #262626;animation:pin .5s cubic-bezier(.2,.7,.2,1)}
+@keyframes pin{from{opacity:0;transform:translateY(14px)}}
+.player .vid{grid-column:1/-1;position:relative;background:#000;aspect-ratio:16/9;width:min(100%,calc(66vh*16/9))}
+.player video{width:100%;height:100%;display:block;background:#000}
+.player .info{grid-column:1/8;padding-top:28px}
+.player .info .lbl{color:var(--sub);font-size:12px}
+.player .info h2{font-size:clamp(24px,2.6vw,38px);font-weight:500;letter-spacing:-.03em;margin:10px 0 6px}
+.player .info .meta{font-size:13px;color:var(--sub)}
+.player .info .desc{font-size:15px;line-height:1.75;color:#bdbdbd;margin-top:22px;max-width:640px}
+.player .side{grid-column:9/13;padding-top:28px;display:flex;justify-content:flex-end;align-items:flex-start;gap:8px}
+.player .side button{all:unset;cursor:pointer;font-size:13px;padding:8px 16px;border:1px solid #333;border-radius:999px;color:#bdbdbd}
+.player .side button:hover{color:#fff;border-color:#777}
+@media (max-width:900px){.player .info,.player .side{grid-column:1/-1}.player .side{justify-content:flex-start;padding-top:18px}}
 .empty{grid-column:1/-1;border-top:1px solid #262626;padding-top:28px;color:var(--sub);font-size:14px}
 .ft{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:0 var(--pad) 30px;font-size:12px;color:#5f5f5f}
 .ft .mail{color:#7a7a7a}.ft .mail:hover{color:#bdbdbd}
@@ -64,7 +80,7 @@ if (c === 'apps') {
   grid.innerHTML = APPS.map((a) => `<a class="item" href="../${a.href}"><div class="im app"><img src="../${a.img}" alt=""></div><h3>${a.title}</h3><p>${a.meta} · 자세히 보기 →</p></a>`).join('');
 } else {
   const list = c === 'all' ? WORKS : WORKS.filter((w) => w.cat === c);
-  grid.innerHTML = list.length ? list.map((w) => `<div class="item"><div class="im"><img src="../assets/hero/${w.key}.jpg" alt=""><video muted playsinline loop preload="none" data-src="../assets/hero/${w.key}.mp4"></video></div><h3>${w.title}</h3><p>${w.meta}</p></div>`).join('')
+  grid.innerHTML = list.length ? list.map((w) => `<div class="item" data-key="${w.key}" role="button" tabindex="0" aria-label="${w.title} 재생"><div class="im"><img src="../assets/hero/${w.key}.jpg" alt=""><video muted playsinline loop preload="none" data-src="../assets/hero/${w.key}.mp4"></video></div><h3>${w.title}</h3><p>${w.meta}</p></div>`).join('')
     : '<p class="empty">새 작업을 준비하고 있어요.</p>';
 }
 // 마우스를 올리면 소리 없이 미리보기
@@ -73,6 +89,35 @@ grid.querySelectorAll('.item').forEach((it) => {
   it.addEventListener('mouseenter', () => { if (!v.src) v.src = v.dataset.src; v.muted = true; v.play().then(() => v.classList.add('on')).catch(() => {}); });
   it.addEventListener('mouseleave', () => v.pause());
 });
+// 작품을 누르면: 그 줄 바로 아래에 소리 있는 플레이어 + 작품 설명
+const catName = (id) => (CATEGORIES.find((x) => x.id === id) || {}).name || '';
+let player = null;
+function closePlayer() {
+  if (!player) return;
+  const v = player.querySelector('video'); v.pause(); v.removeAttribute('src'); v.load();
+  player.remove(); player = null; grid.querySelectorAll('.item.sel').forEach((x) => x.classList.remove('sel'));
+}
+function openWork(it) {
+  const w = WORKS.find((x) => x.key === it.dataset.key); if (!w) return;
+  const wasSame = it.classList.contains('sel'); closePlayer(); if (wasSame) return;
+  // 같은 줄의 마지막 아이템 뒤에 끼워 넣기
+  const items = [...grid.querySelectorAll('.item')], top = it.offsetTop;
+  let after = it; items.forEach((x) => { if (x.offsetTop === top) after = x; });
+  player = document.createElement('section'); player.className = 'player';
+  player.innerHTML = `<div class="vid"><video controls playsinline preload="auto" poster="../assets/hero/${w.key}.jpg" src="../assets/work/${w.key}.mp4"></video></div>
+    <div class="info"><span class="lbl">${catName(w.cat)}</span><h2>${w.title}</h2><p class="meta">${w.meta}</p>${w.desc ? `<p class="desc">${w.desc}</p>` : ''}</div>
+    <div class="side"><button type="button" class="cl">닫기 ✕</button></div>`;
+  after.after(player); it.classList.add('sel');
+  it.querySelector('video') && it.querySelector('video').pause();
+  const v = player.querySelector('video'); v.muted = false; v.volume = 1; v.play().catch(() => {});
+  player.querySelector('.cl').onclick = closePlayer;
+  setTimeout(() => player && player.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+}
+grid.querySelectorAll('.item[data-key]').forEach((it) => {
+  it.addEventListener('click', () => openWork(it));
+  it.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openWork(it); } });
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePlayer(); });
 </script>
 </body>
 </html>
