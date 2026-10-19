@@ -17,6 +17,7 @@ h1,h2,h3,p{margin:0}
 .hd .wrap{height:64px;display:flex;align-items:center;justify-content:space-between}
 .logo{font-weight:800;font-size:15px;letter-spacing:.14em}
 .logo i{font-style:normal;color:var(--accent)}
+.logo img{height:30px;width:auto;display:block}
 .nav{display:flex;gap:28px;font-size:14px}
 .nav a{color:var(--sub);transition:color .2s}.nav a:hover,.nav a.on{color:var(--ink)}
 main{padding-top:64px}
