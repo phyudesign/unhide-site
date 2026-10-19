@@ -19,7 +19,7 @@ body{background:#0c0c0c}
 .hero::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 3px);mix-blend-mode:multiply}
 .hero::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 55%,rgba(0,0,0,.55) 100%),linear-gradient(180deg,rgba(0,0,0,.25) 0,rgba(0,0,0,0) 20%,rgba(0,0,0,0) 75%,rgba(0,0,0,.35) 100%)}
 .top{position:absolute;inset:0 0 auto;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:28px var(--pad)}
-.top .logo img{height:54px;width:auto}
+.top .logo img{height:34px;width:auto}
 .top nav{display:flex;gap:26px;font-size:14px}
 .top nav a{color:rgba(255,255,255,.78);transition:color .2s}.top nav a:hover{color:#fff}
 .cap{position:absolute;left:var(--pad);right:var(--pad);bottom:30px;z-index:5;display:flex;justify-content:space-between;align-items:flex-end;font-size:13px;color:rgba(255,255,255,.85)}
@@ -49,11 +49,12 @@ body{background:#0c0c0c}
 .svc span{font-size:14px;color:var(--sub)}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:56px 24px;margin-top:8px}
 .grid a,.grid .ph{display:block}
-.grid .im{aspect-ratio:4/3;overflow:hidden;background:#1a1a1a;display:flex;align-items:center;justify-content:center}
+.grid .im{aspect-ratio:16/9;overflow:hidden;background:#1a1a1a;display:flex;align-items:center;justify-content:center}
 .grid .im img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
 .grid a:hover .im img{transform:scale(1.04)}
 .grid .im.app{background:#e9e9e7}.grid .im.app img{width:76%;height:auto;object-fit:contain;border-radius:8px;box-shadow:0 24px 60px rgba(0,0,0,.25)}
 .grid .im.empty{border:1px dashed #333;background:transparent;color:#555;font-size:13px}
+.grid .work .im{position:relative}.grid .work video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s}.grid .work:hover video{opacity:1}
 .grid h3{font-size:17px;font-weight:600;margin-top:16px;letter-spacing:-.01em}
 .grid p{font-size:13px;color:var(--sub);margin-top:4px}
 .contact{padding-bottom:150px!important}
@@ -73,11 +74,11 @@ body{background:#0c0c0c}
 </head>
 <body>
 
-<!-- 첫 화면 — 슬라이드는 SLIDES 목록만 바꾸면 됩니다 (영상 mp4도 가능) -->
+<!-- 첫 화면 — 슬라이드는 아래 SLIDES 목록에서 관리 -->
 <section class="hero" id="top">
   <div id="slides"></div>
   <header class="top">
-    <a class="logo" href="./"><img src="assets/logo/unhide-white-web.png" alt="UNHIDE 언하이드"></a>
+    <a class="logo" href="./"><img src="assets/logo/unhide-light.png" alt="UNHIDE 언하이드"></a>
     <nav><a href="#about">About</a><a href="#work">Work</a><a href="#apps">Apps</a><a href="#contact">Contact</a></nav>
   </header>
   <div class="cap"><div id="cap-t"></div><div class="num" id="cap-n"></div></div>
@@ -109,8 +110,10 @@ body{background:#0c0c0c}
   <section class="sec" id="work"><div class="wrap">
     <div class="row rule" style="margin-bottom:40px"><div class="k lbl">Work</div><div class="v lbl">Selected Projects</div></div>
     <div class="grid">
-      <div class="ph"><div class="im empty">포트폴리오 이미지</div><h3>Project Title</h3><p>Client · Category · Year</p></div>
-      <div class="ph"><div class="im empty">포트폴리오 이미지</div><h3>Project Title</h3><p>Client · Category · Year</p></div>
+      <div class="ph work"><div class="im"><img src="assets/hero/starbucks.jpg" alt="Starbucks RTD"><video muted playsinline loop preload="none" data-src="assets/hero/starbucks.mp4"></video></div><h3>Starbucks RTD</h3><p>TVC · 30s</p></div>
+      <div class="ph work"><div class="im"><img src="assets/hero/callaway-60.jpg" alt="Callaway"><video muted playsinline loop preload="none" data-src="assets/hero/callaway-60.mp4"></video></div><h3>Callaway</h3><p>TVC · 60s</p></div>
+      <div class="ph work"><div class="im"><img src="assets/hero/dole.jpg" alt="Dole"><video muted playsinline loop preload="none" data-src="assets/hero/dole.mp4"></video></div><h3>Dole</h3><p>Film</p></div>
+      <div class="ph work"><div class="im"><img src="assets/hero/callaway-20.jpg" alt="Callaway"><video muted playsinline loop preload="none" data-src="assets/hero/callaway-20.mp4"></video></div><h3>Callaway</h3><p>TVC · 20s</p></div>
     </div>
   </div></section>
 
@@ -129,30 +132,52 @@ body{background:#0c0c0c}
     </div>
   </div></section>
 
-  <footer class="ft"><div class="wrap"><span><img src="assets/logo/unhide-white-web.png" alt="UNHIDE" style="height:26px;width:auto;margin-bottom:14px;opacity:.9">© 2026 UNHIDE. All rights reserved.</span><span>Seoul, Korea</span></div></footer>
+  <footer class="ft"><div class="wrap"><span><img src="assets/logo/unhide-light.png" alt="UNHIDE" style="height:22px;width:auto;margin-bottom:16px">© 2026 UNHIDE. All rights reserved.</span><span>Seoul, Korea</span></div></footer>
 </div>
 
 <script>
-// 슬라이드 목록: 이미지(.jpg/.png) 또는 영상(.mp4)
+// 첫 화면 슬라이드: 영상(.mp4) 또는 이미지. 영상은 항상 소리 없이, 끝까지 재생된 뒤 다음으로 넘어갑니다.
 const SLIDES = [
-  { src: "assets/hero/01.jpg", title: "Illustration", meta: "Unhide Studio" },
-  { src: "assets/hero/02.jpg", title: "Illustration", meta: "Unhide Studio" },
-  { src: "assets/hero/03.jpg", title: "Illustration", meta: "Unhide Studio" },
+  { src: "assets/hero/starbucks.mp4",   poster: "assets/hero/starbucks.jpg",   title: "Starbucks RTD",  meta: "TVC · 30s" },
+  { src: "assets/hero/callaway-60.mp4", poster: "assets/hero/callaway-60.jpg", title: "Callaway",       meta: "TVC · 60s" },
+  { src: "assets/hero/dole.mp4",        poster: "assets/hero/dole.jpg",        title: "Dole",           meta: "Film" },
+  { src: "assets/hero/callaway-20.mp4", poster: "assets/hero/callaway-20.jpg", title: "Callaway",       meta: "TVC · 20s" },
 ];
+const IMAGE_SECONDS = 6;
 const box = document.getElementById('slides'), capT = document.getElementById('cap-t'), capN = document.getElementById('cap-n');
+const isVid = (s) => /\.mp4$/i.test(s.src);
 const els = SLIDES.map((s) => {
   const d = document.createElement('div'); d.className = 'slide';
-  d.innerHTML = /\.mp4$/i.test(s.src) ? `<video src="${s.src}" muted playsinline loop autoplay></video>` : `<img src="${s.src}" alt="">`;
+  if (isVid(s)) {
+    const v = document.createElement('video');
+    v.muted = true; v.defaultMuted = true; v.volume = 0; v.playsInline = true; v.preload = 'none';
+    v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.poster = s.poster || '';
+    v.addEventListener('volumechange', () => { v.muted = true; v.volume = 0; });   // 소리 강제 차단
+    v.addEventListener('ended', go);
+    d.appendChild(v);
+  } else d.innerHTML = `<img src="${s.src}" alt="">`;
   box.appendChild(d); return d;
 });
-let i = -1;
+const load = (k) => { const v = els[k].querySelector('video'); if (v && !v.src) { v.src = SLIDES[k].src; v.preload = 'auto'; } };
+let i = -1, timer = 0;
 function go() {
-  if (i >= 0) els[i].classList.remove('on');
+  clearTimeout(timer);
+  if (i >= 0) { els[i].classList.remove('on'); const pv = els[i].querySelector('video'); if (pv) setTimeout(() => pv.pause(), 1400); }
   i = (i + 1) % els.length; els[i].classList.add('on');
+  const v = els[i].querySelector('video');
+  if (v) { load(i); v.currentTime = 0; v.play().catch(() => {}); timer = setTimeout(go, 90000); }  // 혹시 멈춰도 다음으로
+  else timer = setTimeout(go, IMAGE_SECONDS * 1000);
+  load((i + 1) % els.length);   // 다음 영상 미리 불러오기
   capT.innerHTML = `<b>${SLIDES[i].title}</b>${SLIDES[i].meta}`;
   capN.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(els.length).padStart(2, '0');
 }
-go(); if (els.length > 1) setInterval(go, 5000);
+go();
+// Work: 마우스를 올리면 소리 없이 미리보기 재생
+document.querySelectorAll('.work').forEach((w) => {
+  const v = w.querySelector('video');
+  w.addEventListener('mouseenter', () => { if (!v.src) v.src = v.dataset.src; v.muted = true; v.play().catch(() => {}); });
+  w.addEventListener('mouseleave', () => v.pause());
+});
 </script>
 </body>
 </html>
