@@ -139,6 +139,7 @@ const SLIDES = [
   { src: "assets/hero/dole.mp4",        poster: "assets/hero/dole.jpg",        title: "Dole Banana",               meta: "TVC · 15s" },
   { src: "assets/hero/callaway-20.mp4", poster: "assets/hero/callaway-20.jpg", title: "Callaway PARADYME TEASER",  meta: "TVC · 15s" },
   { src: "assets/hero/hidie.mp4",       poster: "assets/hero/hidie.jpg",       title: "HIDIE TEASER",              meta: "FILM · 10s" },
+  { src: "assets/hero/db-petbly.mp4",   poster: "assets/hero/db-petbly.jpg",   title: "DB손해보험 펫블리 반려견 보험", meta: "Digital Film · 61s" },
 ];
 // 접속할 때마다 순서를 무작위로 섞고, 지난 방문 때 첫 화면이었던 영상은 첫 순서에서 피함
 for (let k = SLIDES.length - 1; k > 0; k--) { const r = Math.floor(Math.random() * (k + 1)); [SLIDES[k], SLIDES[r]] = [SLIDES[r], SLIDES[k]]; }
@@ -212,14 +213,16 @@ bar.addEventListener('click', (e) => {
 
 // 최신 작업 3개
 const TOTAL = 3;
-document.getElementById('latest').innerHTML = WORKS.slice(0, TOTAL).map((w, k) => `
+const LATEST_ITEMS = LATEST.map((key) => { const f = findWork(key); if (!f) return null; const w = f.work, e = f.ep;
+  return { key, cat: w.cat, title: e ? `${w.title} — ${e.title}` : w.title, meta: e ? e.meta : w.meta, desc: w.desc }; }).filter(Boolean);
+document.getElementById('latest').innerHTML = LATEST_ITEMS.map((w, k) => `
 <section class="pn work"${k === 0 ? ' id="latest-1"' : ''}>
   <div class="split">
     <div class="txt">
       <span class="lbl">Latest Work — ${(CATEGORIES.find((c) => c.id === w.cat) || {}).name || ''}</span>
       <h2>${w.title}</h2><p class="meta">${w.meta}</p>
       ${w.desc ? `<p class="desc">${w.desc}</p>` : ''}
-      <a class="more" href="work/?c=${w.cat}">See More</a>
+      <a class="more" href="work/?open=${w.key}">See More</a>
     </div>
     <div class="media"><img src="assets/hero/${w.key}.jpg" alt=""><video muted playsinline loop preload="none" data-src="assets/hero/${w.key}.mp4"></video></div>
   </div>
