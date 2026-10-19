@@ -26,9 +26,11 @@ body{background:#0c0c0c;color:#f2f2f2}
 /* 창업(2025.04) 이후 흐르는 시간 — 화면을 거의 채우는 반투명 흰 숫자 */
 /* 창업(2025.04) 이후 흐르는 시간 — 상단 가운데, 메뉴와 같은 크기 */
 @font-face{font-family:"Orbitron";src:url("assets/fonts/orbitron-digits.woff") format("woff");font-weight:400 900;font-display:swap}
-.clock{position:absolute;left:50%;top:42px;z-index:5;transform:translateX(-50%);height:40px;display:flex;align-items:center;pointer-events:none}
-.clock b{font-family:"Orbitron",sans-serif;font-weight:600;font-size:30px;letter-spacing:.26em;margin-right:-.26em;color:rgba(255,255,255,.9);font-variant-numeric:tabular-nums;white-space:nowrap}
-@media (max-width:900px){.clock{top:88px;height:30px}.clock b{font-size:20px;letter-spacing:.2em;margin-right:-.2em}}
+.clock{position:absolute;left:50%;top:28px;z-index:5;transform:translateX(-50%);height:34px;display:flex;align-items:center;pointer-events:none}
+.clock b{font-family:"Orbitron",sans-serif;font-weight:600;font-size:24px;line-height:1;letter-spacing:.26em;color:rgba(255,255,255,.9);font-variant-numeric:tabular-nums;white-space:nowrap;display:flex;align-items:center}
+.clock b i{font-style:normal;margin:0 .3em 0 .2em;opacity:.75}
+.clock b span:last-child{margin-right:-.26em}
+@media (max-width:900px){.clock{top:82px;height:28px}.clock b{font-size:17px;letter-spacing:.2em}.clock b span:last-child{margin-right:-.2em}}
 .hero .slide{position:absolute;inset:0;opacity:0;transition:opacity 1.4s ease}
 .hero .slide.on{opacity:1}
 .hero .slide img,.hero .slide video{width:100%;height:100%;object-fit:cover;opacity:.5;transform:scale(1.06);transition:transform 7s linear}
@@ -224,7 +226,7 @@ bar.addEventListener('click', (e) => {
   const p2 = (n) => String(n).padStart(2, '0');
   const tick = () => {
     const t = Math.max(0, Math.floor((Date.now() - START) / 1000));
-    el.textContent = `${Math.floor(t / 3600)}:${p2(Math.floor(t / 60) % 60)}:${p2(t % 60)}`;
+    el.innerHTML = `<span>${Math.floor(t / 3600)}</span><i>:</i><span>${p2(Math.floor(t / 60) % 60)}</span><i>:</i><span>${p2(t % 60)}</span>`;
   };
   tick(); setInterval(tick, 1000);
 })();
